@@ -1,0 +1,28 @@
+{
+  "include": [
+    "./src/*"
+  ],
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es2015",
+      "esnext.intl",
+      "es2017.intl",
+      "es2018.intl"
+    ],
+    "jsx": "react",
+    "esModuleInterop": true,
+    "target": "es5",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true
+  }
+}

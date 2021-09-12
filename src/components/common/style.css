@@ -1,0 +1,33 @@
+.nav-ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.nav-welcome {
+  float: left;
+}
+
+.nav-btn {
+	float: right;
+}
+
+.message {
+  padding: 16px;
+  margin: 32px auto 0;
+  max-width: 400px;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  border-radius: 15px;
+  font-size: 20px;
+}
+
+.error {
+  background-color: orangered;
+}
+
+.ok {
+  background-color: lightgreen;
+}
