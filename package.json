@@ -17,7 +17,7 @@
     "eject": "react-scripts eject",
     "start-front": "react-scripts start",
     "start-server": "nodemon ../server/server.js --watch ../server/*",
-    "devstart": "concurrently \"npm run start-server\" \"npm run start-front\" --kill-others --kill-others-on-fail",
+    "dev": "concurrently \"npm run start-server\" \"npm run start-front\" --kill-others --kill-others-on-fail",
     "start": "npm run start-front",
     "test": "react-scripts test --env=jsdom"
   },
