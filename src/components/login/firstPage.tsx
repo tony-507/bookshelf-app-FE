@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 
 import StaffPage from './../admin/index'
 import UserPage from './../user/index'
-import { validateLogin } from './../api/index'
+import { validateLogin, registerAdd } from './../api/index'
 import { errorHelper, okHelper } from './../common/helper'
 
 import './style.css';
@@ -33,6 +33,10 @@ const FirstPage = (props: loginPropsUI) => {
   const errorDisplay = {
     setError: props.messageDisplay.setError,
     setDisplayError: props.messageDisplay.setDisplayError
+  }
+  const okDisplay = {
+    setOk: props.messageDisplay.setOk,
+    setDisplayOk: props.messageDisplay.setDisplayOk
   }
 
   const resetEverything = () => {
@@ -78,14 +82,12 @@ const FirstPage = (props: loginPropsUI) => {
       })
     }
     else if (props.accountCredentials.username === ""){
-      errorHelper({setError: props.messageDisplay.setError,
-        setDisplayError: props.messageDisplay.setDisplayError,
+      errorHelper({errorDisplay: errorDisplay,
         errorMessage: 'Username cannot be empty'
       })
     }
     else {
-      errorHelper({setError: props.messageDisplay.setError,
-        setDisplayError: props.messageDisplay.setDisplayError,
+      errorHelper({errorDisplay: errorDisplay,
         errorMessage: 'Password cannot be empty'
       })
     }
@@ -95,24 +97,21 @@ const FirstPage = (props: loginPropsUI) => {
     // Function for basically checking validity of register info
 
     if (props.accountCredentials.username === "" || props.accountCredentials.password === "" || email === "") {
-      errorHelper({setError: props.messageDisplay.setError,
-        setDisplayError: props.messageDisplay.setDisplayError,
+      errorHelper({errorDisplay: errorDisplay,
         errorMessage: 'Username, password and email cannot be empty'
       })
       return false
     }
     else if (props.accountCredentials.password.length < 8) {
       // Check password length (>=8)
-      errorHelper({setError: props.messageDisplay.setError,
-        setDisplayError: props.messageDisplay.setDisplayError,
+      errorHelper({errorDisplay: errorDisplay,
         errorMessage: 'Password too short'
       })
       return false
     }
     else if (props.accountCredentials.password !== confirmPassword) {
       // Confirm password not the same
-      errorHelper({setError: props.messageDisplay.setError,
-        setDisplayError: props.messageDisplay.setDisplayError,
+      errorHelper({errorDisplay: errorDisplay,
         errorMessage: 'Two passwords are not identical'
       })
       return false
@@ -124,28 +123,12 @@ const FirstPage = (props: loginPropsUI) => {
   const handleRegister = () => {
     if (checkAccountDetail()) {
       console.log('Account detail checked OK.')
-
-      axios
-        .post('http://localhost:5000/accounts/new', {
-          username: props.accountCredentials.username,
-          password: props.accountCredentials.password,
-          email: email
-        })
-        .then(res => {
-          console.log(res.data)
-          // Refresh with a success message
-          props.messageDisplay.setDisplayError(false)
-          okHelper({setOk: props.messageDisplay.setOk,
-            setDisplayOk: props.messageDisplay.setDisplayOk,
-            okMessage: 'Account created successfully'
-          })
-        })
-        .catch(err => {
-          console.error(`${err}`)
-          errorHelper({setError: props.messageDisplay.setError,
-            setDisplayError: props.messageDisplay.setDisplayError,
-            errorMessage: 'Error in account creation'
-          })
+      registerAdd({
+        username: props.accountCredentials.username,
+        password: props.accountCredentials.password,
+        email: email,
+        errorDisplay: errorDisplay,
+        okDisplay: okDisplay
       })
     }
   }

@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import axios from 'axios'
 
-import { errorHelper, okHelper } from './../common/helper'
+import { errorHelper } from './../common/helper'
 
 const interfaceURL = 'http://localhost:5000/accounts/'
 
@@ -52,8 +52,7 @@ export const validateLogin = (props: loginUI) => {
         }
       }
       else {
-        errorHelper({setError: props.errorDisplay.setError,
-          setDisplayError: props.errorDisplay.setDisplayError,
+        errorHelper({errorDisplay: props.errorDisplay,
           errorMessage: 'Wrong username or password'
         })
       }
