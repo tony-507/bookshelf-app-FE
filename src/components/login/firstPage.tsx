@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
-import axios from 'axios'
 import { FormattedMessage } from 'react-intl'
 
 import StaffPage from './../admin/index'

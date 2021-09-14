@@ -1,9 +1,9 @@
 import React, { useEffect,useState } from 'react'
-import axios from 'axios'
 
 // Import components
 import { BookshelfList } from './../bookshelf/bookshelf-list'
 import { FilterList } from './filterList'
+import { fetchAllBooks, borrowBook, returnBook } from './../api/index'
 
 import './style.css'
 
@@ -25,46 +25,21 @@ export const UserIntro = (props: userUI) => {
 
   const [books, setBooks] = useState<BookUI[]>([])
   const [loading, setLoading] = useState(true)
+  const bookDbUI = {
+    setBooks: setBooks,
+    setLoading: setLoading
+  }
 
   useEffect(() => {
-    fetchAllBooks()
+    fetchAllBooks({setBooks: setBooks, setLoading: setLoading})
   },[])
-
-  // Fetch all books
-  const fetchAllBooks = async () => {
-    // Send GET request to 'books/all' endpoint
-    axios
-      .get('http://localhost:5000/books/all')
-      .then(response => {
-        // Update the books state
-        setBooks(response.data)
-
-        // Update loading state
-        setLoading(false)
-      })
-      .catch(error => console.error(`There was an error retrieving the book list: ${error}`))
-  }
 
   const handleBookBorrow = (id: number, title: string, status: string) => {
     if (status === "On Shelf") {
-      axios
-        .post('http://localhost:5000/books/borrow', {id: id, username: props.username})
-        .then(response => {
-          console.log(response.data)
-
-          fetchAllBooks()
-        })
-        .catch(err => {console.error(`There was an error borrowing the book ${title}: ${err}`)})
+      borrowBook({id: id, title: title, username: props.username, bookDbUI: bookDbUI})
     }
     else if (status === props.username) {
-      axios
-        .post('http://localhost:5000/books/return', {id: id})
-        .then(response => {
-          console.log(response.data)
-
-          fetchAllBooks()
-        })
-        .catch(err => {console.error(`There was an error borrowing the book ${title}: ${err}`)})
+      returnBook({id: id, title: title, bookDbUI: bookDbUI})
     }
     else {
       console.log('Someone else has borrowed the book')
