@@ -1,13 +1,23 @@
 // Import deps
 import React, { useEffect, useState } from 'react'
 import {FormattedMessage} from 'react-intl'
-import axios from 'axios'
 
 // Import components
 import { BookshelfList } from './../bookshelf/bookshelf-list'
+import { fetchAllBooks, createBook, removeBook, resetBook } from './../api/index'
 
 // Import styles
 import './style.css'
+
+interface BookUI {
+  id: number;
+  author: string;
+  title: string;
+  rating: string;
+  status: string;
+  genre: string;
+  desc: string;
+}
 
 // Create Bookshelf component
 const Bookshelf = () => {
@@ -18,28 +28,13 @@ const Bookshelf = () => {
   const [genre, setGenre] = useState('')
   const [status, setStatus] = useState('On Shelf')
   const [desc, setDesc] = useState('')
-  const [books, setBooks] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [books, setBooks] = useState<BookUI[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
 
   // Fetch all books on initial render
   useEffect(() => {
-    fetchAllBooks()
+    fetchAllBooks({setBooks: setBooks, setLoading: setLoading})
   },[])
-
-  // Fetch all books
-  const fetchAllBooks = async () => {
-    // Send GET request to 'books/all' endpoint
-    axios
-      .get('http://localhost:5000/books/all')
-      .then(response => {
-        // Update the books state
-        setBooks(response.data)
-
-        // Update loading state
-        setLoading(false)
-      })
-      .catch(error => console.error(`There was an error retrieving the book list: ${error}`))
-  }
 
   // Reset all input fields
   const handleInputsReset = () => {
@@ -51,26 +46,17 @@ const Bookshelf = () => {
     setStatus('On Shelf')
   }
 
-  // Create new book
+  // Add new book
   const handleBookCreate = () => {
-    // Send POST request to 'books/create' endpoint
-    axios
-      .post('http://localhost:5000/books/create', {
-        author: author,
-        title: title,
-        rating: rating,
-        genre: genre,
-        status: status,
-        desc: desc
-      })
-      .then(res => {
-        console.log(res.data)
-
-        // Fetch all books to refresh
-        // the books on the bookshelf list
-        fetchAllBooks()
-      })
-      .catch(error => console.error(`There was an error creating the ${title} book: ${error}`))
+    const bookInstance = {
+      author: author,
+      title: title,
+      rating: rating,
+      genre: genre,
+      status: status,
+      desc: desc
+    }
+    createBook({bookInstance: bookInstance, bookDbUI: {setBooks: setBooks, setLoading: setLoading}})
   }
 
   // Submit new book
@@ -90,28 +76,13 @@ const Bookshelf = () => {
   // Remove book
   const handleBookRemove = (id: number, title: string, status: string) => {
     // Send PUT request to 'books/delete' endpoint
-    axios
-      .put('http://localhost:5000/books/delete', { id: id })
-      .then(() => {
-        console.log(`Book ${title} removed.`)
-
-        // Fetch all books to refresh
-        // the books on the bookshelf list
-        fetchAllBooks()
-      })
-      .catch(error => console.error(`There was an error removing the ${title} book: ${error}`))
+    removeBook({id: id, title: title, bookDbUI: {setBooks: setBooks, setLoading: setLoading}})
   }
 
   // Reset book list (remove all books)
   const handleListReset = () => {
     // Send PUT request to 'books/reset' endpoint
-    axios.put('http://localhost:5000/books/reset')
-    .then(() => {
-      // Fetch all books to refresh
-      // the books on the bookshelf list
-      fetchAllBooks()
-    })
-    .catch(error => console.error(`There was an error resetting the book list: ${error}`))
+    resetBook({setBooks: setBooks, setLoading: setLoading})
   }
 
   return (

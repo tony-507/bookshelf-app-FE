@@ -38,6 +38,7 @@ export const checkLogin = (props: sessionUI) => {
     })
 }
 
+
 // Validating login and set cookies
 
 const setCookie = (username: string, role: string) => {
@@ -153,10 +154,10 @@ export const fetchAllBooks = (props: bookDbUI) => {
 }
 
 interface borrowUI {
-	id: number;
-	title: string;
-	username: string;
-	bookDbUI: bookDbUI;
+  id: number;
+  title: string;
+  username: string;
+  bookDbUI: bookDbUI;
 }
 export const borrowBook = (props: borrowUI) => {
   axios
@@ -170,9 +171,9 @@ export const borrowBook = (props: borrowUI) => {
 }
 
 interface returnUI {
-	id: number;
-	title: string;
-	bookDbUI: bookDbUI;
+  id: number;
+  title: string;
+  bookDbUI: bookDbUI;
 }
 export const returnBook = (props: returnUI) => {
   axios
@@ -184,5 +185,66 @@ export const returnBook = (props: returnUI) => {
     })
     .catch(err => {console.error(`There was an error borrowing the book ${props.title}: ${err}`)})
 }
+interface BookInstance {
+  author: string;
+  title: string;
+  rating: string;
+  status: string;
+  genre: string;
+  desc: string;
+}
+interface bookCreateUI {
+  bookInstance: BookInstance;
+  bookDbUI: bookDbUI;
+}
 
+// Update book records
+export const createBook = (props: bookCreateUI) => {
+  // Send POST request to 'books/create' endpoint
+  axios
+  .post(bookURL+'create', {
+    author: props.bookInstance.author,
+    title: props.bookInstance.title,
+    rating: props.bookInstance.rating,
+    genre: props.bookInstance.genre,
+    status: props.bookInstance.status,
+    desc: props.bookInstance.desc
+  })
+  .then(res => {
+    console.log(res.data)
 
+    // Fetch all books to refresh
+    // the books on the bookshelf list
+    fetchAllBooks(props.bookDbUI)
+  })
+  .catch(error => console.error(`There was an error creating the ${props.bookInstance.title} book: ${error}`))
+}
+
+interface bookRemoveUI {
+	id: number;
+	title: string;
+	bookDbUI: bookDbUI;
+}
+
+export const removeBook = (props: bookRemoveUI) => {
+  axios
+	.put(bookURL + 'delete', { id: props.id })
+	.then(() => {
+	console.log(`Book ${props.title} removed.`)
+
+	// Fetch all books to refresh
+	// the books on the bookshelf list
+	fetchAllBooks(props.bookDbUI)
+	})
+	.catch(error => console.error(`There was an error removing the ${props.title} book: ${error}`))
+}
+
+export const resetBook = (props: bookDbUI) => {
+  axios.put(bookURL + 'reset')
+    .then(() => {
+      // Fetch all books to refresh
+      // the books on the bookshelf list
+      fetchAllBooks(props)
+    })
+    .catch(error => console.error(`There was an error resetting the book list: ${error}`))
+}

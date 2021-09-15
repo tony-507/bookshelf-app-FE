@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import StaffPage from './../admin/index'
 import UserPage from './../user/index'
 import { validateLogin, registerAdd } from './../api/index'
-import { errorHelper, okHelper } from './../common/helper'
+import { errorHelper } from './../common/helper'
 
 import './style.css';
 
@@ -29,27 +29,20 @@ const FirstPage = (props: loginPropsUI) => {
   const [confirmPassword,setConfirmPassword] = useState('')
   const [email,setEmail] = useState('')
   const [action, setAction] = useState('login')
-  const errorDisplay = {
-    setError: props.messageDisplay.setError,
-    setDisplayError: props.messageDisplay.setDisplayError
-  }
-  const okDisplay = {
-    setOk: props.messageDisplay.setOk,
-    setDisplayOk: props.messageDisplay.setDisplayOk
-  }
-
-  const resetEverything = () => {
-    props.accountCredentials.setUsername('')
-    props.accountCredentials.setPassword('')
-    setEmail('')
-    setAction('login')
-    props.messageDisplay.setDisplayError(false)
-    props.messageDisplay.setDisplayOk(false)
-  }
+  const {auth, setAuth, username, setUsername, password, setPassword} = props.accountCredentials
+  const {setError, setDisplayError, setOk, setDisplayOk} = props.messageDisplay
 
   useEffect(() => {
-    if (props.accountCredentials.auth==='')
-      resetEverything()
+    const {auth, setUsername, setPassword} = props.accountCredentials
+    const {setDisplayError, setDisplayOk} = props.messageDisplay
+    if (auth==='') {
+      setUsername('')
+      setPassword('')
+      setEmail('')
+      setAction('login')
+      setDisplayError(false)
+      setDisplayOk(false)
+    }
   }, [])
 
   const handleChange = () => {
@@ -58,35 +51,35 @@ const FirstPage = (props: loginPropsUI) => {
     if (action === "login") {
       // Login -> register
       setAction("register")
-      props.messageDisplay.setDisplayError(false)
+      setDisplayError(false)
       setConfirmPassword('')
       setEmail('')
     }
     else {
       // Register -> login
       setAction("login")
-      props.messageDisplay.setDisplayOk(false)
-      props.messageDisplay.setDisplayError(false)
+      setDisplayOk(false)
+      setDisplayError(false)
     }
   }
 
   const handleLogin = () => {
-    if (props.accountCredentials.username !== '' && props.accountCredentials.password !== '') {
+    if (username !== '' && password !== '') {
       // Nonempty inputs, validate with BE
       validateLogin({
-        username: props.accountCredentials.username,
-        password: props.accountCredentials.password,
-        setAuth: props.accountCredentials.setAuth,
-        errorDisplay: errorDisplay
+        username: username,
+        password: password,
+        setAuth: setAuth,
+        errorDisplay: {setError: setError, setDisplayError: setDisplayError}
       })
     }
-    else if (props.accountCredentials.username === ""){
-      errorHelper({errorDisplay: errorDisplay,
+    else if (username === ""){
+      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
         errorMessage: 'Username cannot be empty'
       })
     }
     else {
-      errorHelper({errorDisplay: errorDisplay,
+      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
         errorMessage: 'Password cannot be empty'
       })
     }
@@ -95,22 +88,22 @@ const FirstPage = (props: loginPropsUI) => {
   const checkAccountDetail = () => {
     // Function for basically checking validity of register info
 
-    if (props.accountCredentials.username === "" || props.accountCredentials.password === "" || email === "") {
-      errorHelper({errorDisplay: errorDisplay,
+    if (username === "" || password === "" || email === "") {
+      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
         errorMessage: 'Username, password and email cannot be empty'
       })
       return false
     }
-    else if (props.accountCredentials.password.length < 8) {
+    else if (password.length < 8) {
       // Check password length (>=8)
-      errorHelper({errorDisplay: errorDisplay,
+      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
         errorMessage: 'Password too short'
       })
       return false
     }
-    else if (props.accountCredentials.password !== confirmPassword) {
+    else if (password !== confirmPassword) {
       // Confirm password not the same
-      errorHelper({errorDisplay: errorDisplay,
+      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
         errorMessage: 'Two passwords are not identical'
       })
       return false
@@ -123,43 +116,43 @@ const FirstPage = (props: loginPropsUI) => {
     if (checkAccountDetail()) {
       console.log('Account detail checked OK.')
       registerAdd({
-        username: props.accountCredentials.username,
-        password: props.accountCredentials.password,
+        username: username,
+        password: password,
         email: email,
-        errorDisplay: errorDisplay,
-        okDisplay: okDisplay
+        errorDisplay: {setError: setError, setDisplayError: setDisplayError},
+        okDisplay: {setOk: setOk, setDisplayOk: setDisplayOk}
       })
     }
   }
 
-  if (props.accountCredentials.auth === 'admin')
+  if (auth === 'admin')
     return(
       <div className="page-view">
 
         <StaffPage />
       </div>
     );
-  else if (props.accountCredentials.auth ==='user')
+  else if (auth ==='user')
     return(
       <div className="page-view">
-        <UserPage username={props.accountCredentials.username} />
+        <UserPage username={username} />
       </div>
     );
   else
     return(
       action === 'login'
         ? <div className="page-view" onSubmit={handleLogin} id="form-login">
-            <label className="form-label" htmlFor="props.accountCredentials.username">
+            <label className="form-label" htmlFor="username">
               <FormattedMessage id="username" defaultMessage="Username" />:
             </label>
-            <input className="form-login" type="text" id="username" name="username" value={props.accountCredentials.username} 
-            onChange={(e) => props.accountCredentials.setUsername(e.currentTarget.value)} />
+            <input className="form-login" type="text" id="username" name="username" value={username} 
+            onChange={(e) => setUsername(e.currentTarget.value)} />
 
-            <label className="form-label" htmlFor="props.accountCredentials.password">
+            <label className="form-label" htmlFor="password">
               <FormattedMessage id="password" defaultMessage="Password" />:
             </label>
-            <input className="form-login" type="password" id="password" name="password" value={props.accountCredentials.password} 
-            onChange={(e) => props.accountCredentials.setPassword(e.currentTarget.value)} />
+            <input className="form-login" type="password" id="password" name="password" value={password} 
+            onChange={(e) => setPassword(e.currentTarget.value)} />
 
             <button onClick={handleLogin} className="login-btn">
               <FormattedMessage id="loginBtn" defaultMessage="Login" />
@@ -170,18 +163,18 @@ const FirstPage = (props: loginPropsUI) => {
         </div>
         
         : <div className="page-view" onSubmit={handleRegister} id="form-register">
-            <label className="form-label" htmlFor="props.accountCredentials.username">
+            <label className="form-label" htmlFor="username">
               <FormattedMessage id="username" defaultMessage="Username" />:
             </label>
-            <input className="form-login" type="text" id="username" name="username" value={props.accountCredentials.username} 
-            onChange={(e) => props.accountCredentials.setUsername(e.currentTarget.value)} />
+            <input className="form-login" type="text" id="username" name="username" value={username} 
+            onChange={(e) => setUsername(e.currentTarget.value)} />
 
-            <label className="form-label" htmlFor="props.accountCredentials.password">
+            <label className="form-label" htmlFor="password">
               <FormattedMessage id="password" defaultMessage="Password" /> 
               (<FormattedMessage id="pw_req" defaultMessage="at least 8 characters long" />):
             </label>
-            <input className="form-login" type="password" id="password" name="password" value={props.accountCredentials.password} 
-            onChange={(e) => props.accountCredentials.setPassword(e.currentTarget.value)} />
+            <input className="form-login" type="password" id="password" name="password" value={password} 
+            onChange={(e) => setPassword(e.currentTarget.value)} />
 
             <label className="form-label" htmlFor="confirmPassword">
               <FormattedMessage id="confirmPassword" defaultMessage="Input the password again" /> :
