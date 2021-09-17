@@ -3,8 +3,13 @@ import axios from 'axios'
 
 import { errorHelper, okHelper } from './../common/helper'
 
-const accountURL = 'http://localhost:5000/accounts/'
-const bookURL = 'http://localhost:5000/books/'
+// Dev path
+// const accountURL = 'http://localhost:5000/accounts/'
+// const bookURL = 'http://localhost:5000/books/'
+
+// Prod path
+const accountURL = 'https://bkbe.herokuapp.com/accounts/'
+const bookURL = 'https://bkbe.herokuapp.com/books/'
 
 interface errorUI {
   setDisplayError: Dispatch<SetStateAction<boolean>>;
