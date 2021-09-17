@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
-import axios from 'axios'
+
 import { FilterRow } from './filterRow'
+import { getTopFive, applyFilter } from './../api/index'
 
 interface BookUI {
   id: number;
@@ -18,58 +19,22 @@ interface filterUI {
 }
 
 export const FilterList = (props: filterUI) => {
-  const [ratingList, setRatingList] = useState([])
-  const [genreList, setGenreList] = useState([])
+  const [ratingList, setRatingList] = useState<string[]>([])
+  const [genreList, setGenreList] = useState<string[]>([])
   const statusList = ['On Shelf', 'Borrowed', 'Not On Shelf']
   const statusMapList = ['On Shelf', props.username, 'Not On Shelf','dummy']
 
   const TopFive = (type: string) => {
-  	axios
-  	  .get('http://localhost:5000/books/top5',{
-  	  	params: {type: type}
-  	  })
-  	  .then(response => {
-  	  	const responseArray = response.data.reduce((cur: string[],next: Record<string,string>) => [...cur,next[type]],[])
-		if (type === 'genre')
-		  setGenreList(responseArray)
-		else
-		  setRatingList(responseArray)
-  	  })
-  	  .catch(err => console.error(`Error in retrieveing ${type}: ${err}`))
+    if (type === 'genre')
+      getTopFive({type: type, setList: setGenreList})
+    else
+      getTopFive({type: type, setList: setRatingList})
   }
 
   useEffect(() => {
   	TopFive('rating')
   	TopFive('genre')
   },[])
-
-  const handleStatusArray = () => {
-  	let statusArr: number[] = []
-  	let dummy
-  	for (let i=0; i<2; i++) {
-  	  dummy = document.getElementById('Status'+i) as HTMLInputElement
-  	  if (dummy)
-  	  	if ((document.getElementById('Status'+i) as HTMLInputElement).checked)
-  	  		statusArr.push(i)
-  	}
-
-  	dummy = document.getElementById('Status2') as HTMLInputElement
-  	if (dummy)
-  		if ((document.getElementById('Status2') as HTMLInputElement).checked) {
-  			if (statusArr.length === 0)
-  			  statusArr = [0,1]
-  			else if (statusArr.length === 2)
-  				statusArr = []
-  			else
-  			  statusArr = statusArr.map((item) => 1-item)
-  			statusArr.push(1)
-  			return statusArr
-  		}
-  		else {
-  			statusArr.push(0)
-  			return statusArr
-  		}
-  }
 
   const handleFilterClick = () => {
   	let ratingArr: number[] = []
@@ -83,14 +48,14 @@ export const FilterList = (props: filterUI) => {
   	  if ((dummy && dummy.checked) || dummy === null)
   	  	genreArr.push(i)
   	}
-	const selectedGenre = genreArr.reduce((acc,cur) => [...acc,genreList[cur]], [])
+	const selectedGenre: string[] = genreArr.reduce((acc: string[],cur: number) => [...acc,genreList[cur]], [])
 
   	for (let i=0; i<ratingList.length; i++) {
   	  dummy = document.getElementById('Rating'+i) as HTMLInputElement
   	  if ((dummy && dummy.checked) || dummy === null)
   	  	ratingArr.push(i)
   	}
-  	const selectedRating = ratingArr.reduce((acc,cur) => [...acc,ratingList[cur]], [])
+  	const selectedRating: string[] = ratingArr.reduce((acc: string[],cur: number) => [...acc,ratingList[cur]], [])
 
   	for (let i=0; i<2; i++) {
   	  dummy = document.getElementById('Status'+i) as HTMLInputElement
@@ -114,22 +79,16 @@ export const FilterList = (props: filterUI) => {
   	      statusArr = [1,2,3]
   	  }
   	}
-  	const selectedStatus = statusArr && statusArr.reduce((acc: string[],cur: number) => [...acc,statusMapList[cur]], [])
+  	const selectedStatus: string[] = statusArr && statusArr.reduce((acc: string[],cur: number) => [...acc,statusMapList[cur]], [])
 
-  	axios
-  	  .get('http://localhost:5000/books/filter', {
-  	  	params: {
-  	  		selectedRating: selectedRating,
-  	  		selectedStatus: selectedStatus,
-  	  		selectedGenre: selectedGenre,
-  	  		username: props.username,
-  	  		notOnShelf: notOnShelf
-  	  	}
-  	  })
-  	  .then(response => {
-  	  	props.setBooks(response.data)
-  	  })
-  	  .catch(err => console.error(`Error in filtering books: ${err}`))
+    applyFilter({
+      selectedRating: selectedRating,
+      selectedStatus: selectedStatus,
+      selectedGenre: selectedGenre,
+      username: props.username,
+      notOnShelf: notOnShelf,
+      setBooks: props.setBooks
+    })
   }
 
   return(

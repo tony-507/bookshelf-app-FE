@@ -248,3 +248,47 @@ export const resetBook = (props: bookDbUI) => {
     })
     .catch(error => console.error(`There was an error resetting the book list: ${error}`))
 }
+
+// Filtering api
+interface topFiveUI {
+  type: string;
+  setList: Dispatch<SetStateAction<string[]>>;
+}
+
+export const getTopFive = (props: topFiveUI) => {
+  axios
+  	.get(bookURL + 'top5',{
+  	  params: {type: props.type}
+  	})
+  	.then(response => {
+  	  const responseArray = response.data.reduce((cur: string[],next: Record<string,string>) => [...cur,next[props.type]],[])
+  	  props.setList(responseArray)
+  	})
+  	.catch(err => console.error(`Error in retrieveing ${props.type}: ${err}`))
+}
+
+interface filterUI {
+  selectedRating: string[];
+  selectedStatus: string[];
+  selectedGenre: string[];
+  username: string;
+  notOnShelf: boolean;
+  setBooks: Dispatch<SetStateAction<BookUI[]>>;
+}
+
+export const applyFilter = (props: filterUI) => {
+  axios
+  	.get(bookURL + 'filter', {
+  	  params: {
+  	  	selectedRating: props.selectedRating,
+  	  	selectedStatus: props.selectedStatus,
+  	  	selectedGenre: props.selectedGenre,
+  	  	username: props.username,
+  	  	notOnShelf: props.notOnShelf
+  	 }
+  	})
+  	.then(response => {
+  	  props.setBooks(response.data)
+  	})
+  	.catch(err => console.error(`Error in filtering books: ${err}`))
+}
