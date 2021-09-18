@@ -15,16 +15,19 @@ Follow the steps below to run this simple web app.
 git clone https://github.com/tony-507/full-stack-js-bookshelf
 ```
 to download the repo.
+
 2. Open terminal, and run
 ```
 npm install
 ```
 to install client side dependencies.
+
 3. Set connections to appropriate backend URLs by changing values of the variables
 ```
 accountURL, bookURL
 ```
 in the script ```./src/components/api/index```.
+
 4. Finally run
 ```
 npm run start
@@ -33,7 +36,7 @@ to start front-end or
 ```
 npm run dev
 ```
-to start both client and server side.
+to start both client and server side if you also have server side installed.
 
 ## Features
 My app has the following features:
@@ -46,7 +49,9 @@ limited visibility to book status (On Shelf/ Borrowed/ Not On Shelf)
 ## Current Objectives
 1. Account information altering
 2. Adaptation to REST API
+3. Use of webpacks to build source
 
 ## References
 1. Backbone for the project: https://blog.alexdevero.com/react-express-sqlite-app/
 2. Docs for different packages: knex, react-intl, express
+3. Stackexchange for answers to different bugs and errors
