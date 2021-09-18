@@ -43,6 +43,14 @@ export const checkLogin = (props: sessionUI) => {
     })
 }
 
+export const checkLogout = () => {
+  axios
+    .get(accountURL + 'logout', {withCredentials: true})
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(err => {console.log(`${err}`)})
+}
 
 // Validating login and set cookies
 

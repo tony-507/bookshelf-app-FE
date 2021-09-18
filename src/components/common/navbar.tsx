@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import axios from 'axios'
 import {FormattedMessage} from 'react-intl'
 
 // Translation
 import en_gb from './../../i18n/en_gb'
 import zh_hk from './../../i18n/zh_hk'
 
+import { checkLogout } from './../api/index'
 import './style.css'
 
 interface navbarUI {
@@ -30,12 +30,7 @@ export const Navbar = (props: navbarUI) => {
   	props.accountCredentials.setUsername('')
   	props.accountCredentials.setPassword('')
     // Also destroy session
-    axios
-      .get('http://localhost:5000/accounts/logout', {withCredentials: true})
-      .then(response => {
-        console.log(response.data)
-      })
-      .catch(err => {console.log(`${err}`)})
+    checkLogout()
   }
 
   const handleLang = () => {
