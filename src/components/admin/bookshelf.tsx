@@ -86,7 +86,7 @@ const Bookshelf = () => {
   }
 
   return (
-    <div className="book-list-wrapper">
+    <div className="book-list-wrapper page-view">
       {/* Form for creating new book */}
       <div className="book-list-form">
         <div className="form-wrapper" onSubmit={handleBookSubmit}>

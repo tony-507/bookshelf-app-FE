@@ -1,8 +1,6 @@
-import React, { useState, Dispatch, SetStateAction } from 'react'
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import StaffPage from './../admin/index'
-import UserPage from './../user/index'
 import { validateLogin, registerAdd } from './../api/index'
 import { errorHelper } from './../common/helper'
 
@@ -29,8 +27,12 @@ const FirstPage = (props: loginPropsUI) => {
   const [confirmPassword,setConfirmPassword] = useState('')
   const [email,setEmail] = useState('')
   const [action, setAction] = useState('login')
-  const {auth, setAuth, username, setUsername, password, setPassword} = props.accountCredentials
+  const {setAuth, username, setUsername, password, setPassword} = props.accountCredentials
   const {setError, setDisplayError, setOk, setDisplayOk} = props.messageDisplay
+
+  useEffect(() => {
+    setAction('login')
+  },[])
 
   const handleChange = () => {
     // Toggle between login and register
@@ -111,78 +113,64 @@ const FirstPage = (props: loginPropsUI) => {
       })
     }
   }
+  
+  return(
+    action === 'login'
+      ? <div className="page-view" onSubmit={handleLogin} id="form-login">
+          <label className="form-label" htmlFor="username">
+            <FormattedMessage id="username" defaultMessage="Username" />:
+          </label>
+          <input className="form-login" type="text" id="username" name="username" value={username} 
+          onChange={(e) => setUsername(e.currentTarget.value)} />
 
-  if (auth === 'admin')
-    return(
-      <div className="page-view">
+          <label className="form-label" htmlFor="password">
+            <FormattedMessage id="password" defaultMessage="Password" />:
+          </label>
+          <input className="form-login" type="password" id="password" name="password" value={password} 
+          onChange={(e) => setPassword(e.currentTarget.value)} />
 
-        <StaffPage />
+          <button onClick={handleLogin} className="login-btn">
+            <FormattedMessage id="loginBtn" defaultMessage="Login" />
+          </button>
+          <button onClick={handleChange} className="login-btn">
+            <FormattedMessage id="newUserBtn" defaultMessage="New?" />
+          </button>
       </div>
-    );
-  else if (auth ==='user')
-    return(
-      <div className="page-view">
-        <UserPage username={username} />
+      
+      : <div className="page-view" onSubmit={handleRegister} id="form-register">
+          <label className="form-label" htmlFor="username">
+            <FormattedMessage id="username" defaultMessage="Username" />:
+          </label>
+          <input className="form-login" type="text" id="username" name="username" value={username} 
+          onChange={(e) => setUsername(e.currentTarget.value)} />
+
+          <label className="form-label" htmlFor="password">
+            <FormattedMessage id="password" defaultMessage="Password" /> 
+            (<FormattedMessage id="pw_req" defaultMessage="pw_req" />):
+          </label>
+          <input className="form-login" type="password" id="password" name="password" value={password} 
+          onChange={(e) => setPassword(e.currentTarget.value)} />
+
+          <label className="form-label" htmlFor="confirmPassword">
+            <FormattedMessage id="confirmPassword" defaultMessage="Input the password again" />:
+          </label>
+          <input className="form-login" type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} 
+          onChange={(e) => setConfirmPassword(e.currentTarget.value)} />
+
+          <label className="form-label" htmlFor="email">
+            <FormattedMessage id="email" defaultMessage="Email" />:
+          </label>
+          <input className="form-login" type="text" id="email" name="email" value={email} 
+          onChange={(e) => setEmail(e.currentTarget.value)} />
+
+          <button onClick={handleChange} className="login-btn">
+            <FormattedMessage id="existUserBtn" defaultMessage="Existing user?" />
+          </button>
+          <button onClick={handleRegister} className="login-btn">
+            <FormattedMessage id="registerUserBtn" defaultMessage="Register" />
+          </button>
       </div>
-    );
-  else
-    return(
-      action === 'login'
-        ? <div className="page-view" onSubmit={handleLogin} id="form-login">
-            <label className="form-label" htmlFor="username">
-              <FormattedMessage id="username" defaultMessage="Username" />:
-            </label>
-            <input className="form-login" type="text" id="username" name="username" value={username} 
-            onChange={(e) => setUsername(e.currentTarget.value)} />
-
-            <label className="form-label" htmlFor="password">
-              <FormattedMessage id="password" defaultMessage="Password" />:
-            </label>
-            <input className="form-login" type="password" id="password" name="password" value={password} 
-            onChange={(e) => setPassword(e.currentTarget.value)} />
-
-            <button onClick={handleLogin} className="login-btn">
-              <FormattedMessage id="loginBtn" defaultMessage="Login" />
-            </button>
-            <button onClick={handleChange} className="login-btn">
-              <FormattedMessage id="newUserBtn" defaultMessage="New?" />
-            </button>
-        </div>
-        
-        : <div className="page-view" onSubmit={handleRegister} id="form-register">
-            <label className="form-label" htmlFor="username">
-              <FormattedMessage id="username" defaultMessage="Username" />:
-            </label>
-            <input className="form-login" type="text" id="username" name="username" value={username} 
-            onChange={(e) => setUsername(e.currentTarget.value)} />
-
-            <label className="form-label" htmlFor="password">
-              <FormattedMessage id="password" defaultMessage="Password" /> 
-              (<FormattedMessage id="pw_req" defaultMessage="pw_req" />):
-            </label>
-            <input className="form-login" type="password" id="password" name="password" value={password} 
-            onChange={(e) => setPassword(e.currentTarget.value)} />
-
-            <label className="form-label" htmlFor="confirmPassword">
-              <FormattedMessage id="confirmPassword" defaultMessage="Input the password again" /> :
-            </label>
-            <input className="form-login" type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.currentTarget.value)} />
-
-            <label className="form-label" htmlFor="email">
-              <FormattedMessage id="email" defaultMessage="Email" />:
-            </label>
-            <input className="form-login" type="text" id="email" name="email" value={email} 
-            onChange={(e) => setEmail(e.currentTarget.value)} />
-
-            <button onClick={handleChange} className="login-btn">
-              <FormattedMessage id="existUserBtn" defaultMessage="Existing user?" />
-            </button>
-            <button onClick={handleRegister} className="login-btn">
-              <FormattedMessage id="registerUserBtn" defaultMessage="Register" />
-            </button>
-        </div>
-    );
+  );
 }
 
 export default FirstPage

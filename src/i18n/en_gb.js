@@ -13,7 +13,6 @@ const en_gb = {
   'registerUserBtn': 'Register',
   'footer': 'By Tony Chan',
   'changeLang': '中文',
-  'pw_req': 'At least 8 characters long',
   'confirmPassword': 'Input the password again',
 
   // Staff page

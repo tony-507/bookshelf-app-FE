@@ -13,7 +13,6 @@ const zh_hk = {
   'registerUserBtn': '註冊',
   'footer': '陳旭輝',
   'changeLang': 'ENG',
-  'pw_req': '最少8位',
   'confirmPassword': '再次輸入密碼',
 
   // Staff page

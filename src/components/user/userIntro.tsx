@@ -44,7 +44,7 @@ export const UserIntro = (props: userUI) => {
   }
   
   return (
-    <div className="row">
+    <div className="row page-view">
       < FilterList setBooks={setBooks} username={props.username} />
 
       <div className="col-content">
