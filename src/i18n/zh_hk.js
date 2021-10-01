@@ -13,6 +13,8 @@ const zh_hk = {
   'registerUserBtn': '註冊',
   'footer': '陳旭輝',
   'changeLang': 'ENG',
+  'pw_req': '最少8位',
+  'confirmPassword': '再次輸入密碼',
 
   // Staff page
   'enterXXX': '輸入',
@@ -26,7 +28,16 @@ const zh_hk = {
   'rating': '評價',
   'genre': '種類',
   'description': '簡介',
-  'status': '狀態'
+  'status': '狀態',
+  'On Shelf': '在架上',
+  'Not On Shelf': '不在架上',
+  'Borrowed by': '被借出：',
+  'Borrowed': '借出',
+
+  // User page
+  'Quick Filters': '快速過濾',
+  'All': '全部',
+  'Apply Filters': '過濾'
 };
 
 export default zh_hk;

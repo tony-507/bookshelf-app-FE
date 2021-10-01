@@ -41,9 +41,6 @@ export const UserIntro = (props: userUI) => {
     else if (status === props.username) {
       returnBook({id: id, title: title, bookDbUI: bookDbUI})
     }
-    else {
-      console.log('Someone else has borrowed the book')
-    }
   }
   
   return (

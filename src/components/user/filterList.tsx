@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import {FormattedMessage} from 'react-intl'
 
 import { FilterRow } from './filterRow'
 import { getTopFive, applyFilter } from './../api/index'
@@ -93,11 +94,15 @@ export const FilterList = (props: filterUI) => {
 
   return(
   	<div className='col-menu'>
-  	  <h3>Quick Filters</h3>
-      <FilterRow list={ratingList} item={'Rating'} />
-      <FilterRow list={statusList} item={'Status'} />
-      <FilterRow list={genreList} item={'Genre'} />
-      <button className="filter-btn" onClick={handleFilterClick}>Apply Filters</button>
+  	  <h3>
+        <FormattedMessage id="Quick Filters" defaultMessage="quick_filter" />
+      </h3>
+      <FilterRow list={ratingList} item={'rating'} />
+      <FilterRow list={statusList} item={'status'} />
+      <FilterRow list={genreList} item={'genre'} />
+      <button className="filter-btn" onClick={handleFilterClick}>
+        <FormattedMessage id="Apply Filters" defaultMessage="filter_apply" />
+      </button>
     </div>
   )
 }

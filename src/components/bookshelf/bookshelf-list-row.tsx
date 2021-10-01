@@ -1,5 +1,6 @@
 // Import deps
-import React from 'react';
+import React from 'react'
+import {FormattedMessage} from 'react-intl'
 
 // Create interfaces
 interface BookshelfListRowUI {
@@ -22,25 +23,25 @@ export const BookshelfListRow = (props: BookshelfListRowUI) => {
 
   const handleShowStatus = () => {
     if (props.username === props.book.status)
-      return 'Borrowed'
+      return <FormattedMessage id="Borrowed" defaultMessage="status_borrowed" />
     else if (props.book.status === 'On Shelf')
-      return 'On Shelf'
+      return <FormattedMessage id="On Shelf" defaultMessage="status_on_shelf" />
     else {
       return(
         props.username === ''
-        ? `Borrowed By ${props.book.status}`
-        : 'Not On Shelf'
+        ? <FormattedMessage id="Borrowed by" defaultMessage="status_borrowed_admin" /> + `${props.book.status}`
+        : <FormattedMessage id="Not On Shelf" defaultMessage="status_borrowed_user" />
       )
     }
   }
 
   const handleChangeButton = () => {
     if (props.username === '')
-      return 'Remove book'
+      return <FormattedMessage id="Remove book" defaultMessage="remove_book" />
     else if (props.book.status === 'On Shelf')
-      return 'Borrow book'
+      return <FormattedMessage id="Borrow book" defaultMessage="borrow_book" />
     else if (props.book.status === props.username)
-      return 'Return book'
+      return <FormattedMessage id="Return book" defaultMessage="return_book" />
     else
       return null
   }

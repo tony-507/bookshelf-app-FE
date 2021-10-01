@@ -13,6 +13,8 @@ const en_gb = {
   'registerUserBtn': 'Register',
   'footer': 'By Tony Chan',
   'changeLang': '中文',
+  'pw_req': 'At least 8 characters long',
+  'confirmPassword': 'Input the password again',
 
   // Staff page
   'enterXXX': 'Enter ',
@@ -26,7 +28,16 @@ const en_gb = {
   'rating': 'RATING',
   'genre': 'GENRE',
   'description': 'DESCRIPTION',
-  'status': 'STATUS'
+  'status': 'STATUS',
+  'On Shelf': 'On Shelf',
+  'Not On Shelf': 'Not On Shelf',
+  'Borrowed by': 'Borrowed by',
+  'Borrowed': 'Borrowed',
+
+  // User page
+  'Quick Filters': 'Quick Filters',
+  'All': 'All',
+  'Apply Filters': 'Apply Filters'
 };
 
 export default en_gb;

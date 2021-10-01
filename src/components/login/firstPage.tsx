@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import StaffPage from './../admin/index'
@@ -31,19 +31,6 @@ const FirstPage = (props: loginPropsUI) => {
   const [action, setAction] = useState('login')
   const {auth, setAuth, username, setUsername, password, setPassword} = props.accountCredentials
   const {setError, setDisplayError, setOk, setDisplayOk} = props.messageDisplay
-
-  useEffect(() => {
-    const {auth, setUsername, setPassword} = props.accountCredentials
-    const {setDisplayError, setDisplayOk} = props.messageDisplay
-    if (auth==='') {
-      setUsername('')
-      setPassword('')
-      setEmail('')
-      setAction('login')
-      setDisplayError(false)
-      setDisplayOk(false)
-    }
-  }, [])
 
   const handleChange = () => {
     // Toggle between login and register
@@ -171,7 +158,7 @@ const FirstPage = (props: loginPropsUI) => {
 
             <label className="form-label" htmlFor="password">
               <FormattedMessage id="password" defaultMessage="Password" /> 
-              (<FormattedMessage id="pw_req" defaultMessage="at least 8 characters long" />):
+              (<FormattedMessage id="pw_req" defaultMessage="pw_req" />):
             </label>
             <input className="form-login" type="password" id="password" name="password" value={password} 
             onChange={(e) => setPassword(e.currentTarget.value)} />
@@ -182,7 +169,9 @@ const FirstPage = (props: loginPropsUI) => {
             <input className="form-login" type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} 
             onChange={(e) => setConfirmPassword(e.currentTarget.value)} />
 
-            <label className="form-label" htmlFor="email">Email:</label>
+            <label className="form-label" htmlFor="email">
+              <FormattedMessage id="email" defaultMessage="Email" />:
+            </label>
             <input className="form-login" type="text" id="email" name="email" value={email} 
             onChange={(e) => setEmail(e.currentTarget.value)} />
 

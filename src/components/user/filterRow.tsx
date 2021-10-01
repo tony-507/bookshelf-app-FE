@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {FormattedMessage} from 'react-intl'
 
 interface filterItemUI {
   list: string[];
@@ -25,14 +26,16 @@ export const FilterRow = (props:filterItemUI) => {
 
   return(
     <div>
-      <h4 className="filterHeading" onClick={toggleVisibility} >{props.item}</h4>
+      <h4 className="filterHeading" onClick={toggleVisibility} >
+        <FormattedMessage id={props.item} defaultMessage="filter_option" />
+      </h4>
 
       {visible
       ? <div className='filterRow' key={props.item} >
         <input className="filterBox" id={props.item} type="checkbox" name="all" value={props.item} onClick={handleSelectAll}>
         </input>
         <label htmlFor={props.item}>
-          All
+          <FormattedMessage id="All" defaultMessage="option_all" />
         </label>
       </div>
       : null
