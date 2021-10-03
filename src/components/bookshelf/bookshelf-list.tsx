@@ -26,6 +26,7 @@ interface BookshelfListUI {
   loading: boolean;
   handleBookChange: (id: number, title: string, status: string) => void;
   username: string;
+  isPublic: boolean;
 }
 
 // Create BookshelfList component
@@ -62,6 +63,7 @@ export const BookshelfList = (props: BookshelfListUI) => {
                 position={idx + 1}
                 handleBookChange={props.handleBookChange}
                 username={props.username}
+                isPublic={props.isPublic}
               />
               )
             )

@@ -12,9 +12,10 @@ import {
 } from "react-router-dom";
 
 // Import components
-import FirstPage from './components/login/index'
+import PublicPage from './components/public/index'
 import UserPage from './components/user/index'
 import StaffPage from './components/admin/index'
+import BookDetail from './components/bookDetail/index'
 import { Error, Ok } from './components/common/messages'
 import { Navbar } from './components/common/navbar'
 import {checkLogin} from './components/api/index'
@@ -68,7 +69,7 @@ const WrappedFirst = () => {
   	<Router>
 		  <div className="page-view wrap">
 
-		  	<Navbar accountCredentials={accountCredentials} locale={locale} setLocale={setLocale} setMessages={setMessages}/>
+		  	<Navbar accountCredentials={accountCredentials} locale={locale} setLocale={setLocale} setMessages={setMessages} messageDisplay={messageDisplay} />
 
 			  <Error display={displayError} message={error} />
 
@@ -79,7 +80,7 @@ const WrappedFirst = () => {
 				 		<Redirect to="/landing" />
 				 	</Route>
 		    	<Route exact path="/landing">
-		    		{auth === '' ? <FirstPage messageDisplay={messageDisplay} accountCredentials={accountCredentials} /> : <Redirect to={"/"+auth} />}
+		    		{auth === '' ? <PublicPage /> : <Redirect to={"/"+auth} />}
 		    	</Route>
 		    	<Route path="/user">
 		    		{auth === 'user' ? <UserPage username={username} /> : <Redirect to="/" />}
@@ -87,11 +88,12 @@ const WrappedFirst = () => {
 		    	<Route path="/admin">
 		    		{auth === 'admin' ? <StaffPage /> : <Redirect to="/" />}
 		    	</Route>
-		    	<Route path="/error/404">
+		    	<Route path="/errors/:id">
 		    		<h1>Error 404 Not Found</h1>
 		    	</Route>
+		    	<Route path="/books/:id" children={<BookDetail auth={auth} />} />
 		    	<Route>
-		    		<Redirect to="/error/404" />
+		    		<Redirect to="/errors/404" />
 		    	</Route>
 		    </Switch>
 

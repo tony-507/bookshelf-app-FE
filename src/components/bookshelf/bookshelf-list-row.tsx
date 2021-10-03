@@ -1,5 +1,6 @@
 // Import deps
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import {FormattedMessage} from 'react-intl'
 
 // Create interfaces
@@ -16,10 +17,13 @@ interface BookshelfListRowUI {
   };
   handleBookChange: (id: number, title: string, status: string) => void;
   username: string;
+  isPublic: boolean;
 }
 
 // Create BookshelfListRow component
 export const BookshelfListRow = (props: BookshelfListRowUI) => {
+
+  let history = useHistory()
 
   const handleShowStatus = () => {
     if (props.username === props.book.status)
@@ -29,7 +33,7 @@ export const BookshelfListRow = (props: BookshelfListRowUI) => {
     else {
       return(
         props.username === ''
-        ? <FormattedMessage id="Borrowed by" defaultMessage="status_borrowed_admin" /> + `${props.book.status}`
+        ? <FormattedMessage id="Borrowed by" defaultMessage="status_borrowed_admin" values={{user: `${props.book.status}`}}/>
         : <FormattedMessage id="Not On Shelf" defaultMessage="status_borrowed_user" />
       )
     }
@@ -46,6 +50,8 @@ export const BookshelfListRow = (props: BookshelfListRowUI) => {
       return null
   }
 
+  const redirectBookDetail = () => {history.push(`/books/${props.book.id}`)}
+
   return(
     <tr className="table-row">
       <td className="table-item">
@@ -53,7 +59,7 @@ export const BookshelfListRow = (props: BookshelfListRowUI) => {
       </td>
 
       <td className="table-item">
-        {props.book.title}
+        <button className="detail-btn" onClick={redirectBookDetail}><u>{props.book.title}</u></button>
       </td>
 
       <td className="table-item">
@@ -72,12 +78,15 @@ export const BookshelfListRow = (props: BookshelfListRowUI) => {
         {handleShowStatus()}
       </td>
 
-      <td className="table-item">
+      {props.isPublic
+      ? (<td className="table-item">
+      </td>)
+      : (<td className="table-item">
         <button
           className="btn btn-remove"
           onClick={() => props.handleBookChange(props.book.id, props.book.title,props.book.status)}>
           {handleChangeButton()}
         </button>
-      </td>
+      </td>)}
     </tr>)
 }

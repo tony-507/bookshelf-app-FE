@@ -1,0 +1,39 @@
+.nav-ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.nav-left {
+  float: left;
+}
+
+.nav-right {
+	float: right;
+}
+
+.detail {
+	list-style-type: none;
+	padding: 16px 0px;
+	margin: 0;
+}
+
+.detailItem {
+	padding: 8px 0px;
+}
+
+.status-btn {
+  display: block;
+  border: 0;
+  cursor: pointer;
+  padding: 12px 18px;
+  width: 100px;
+  margin: 12px 18px auto 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background-color: #3498db;
+  border-radius: 4px;
+  float:  right;
+}

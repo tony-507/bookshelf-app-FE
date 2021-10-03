@@ -1,3 +1,3 @@
-import FirstPage from './firstPage'
+import { LoginPopup } from './loginPopup'
 
-export default FirstPage
+export default LoginPopup

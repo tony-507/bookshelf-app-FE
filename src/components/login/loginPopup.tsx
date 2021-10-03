@@ -23,7 +23,7 @@ interface loginPropsUI {
   };
 }
 
-const FirstPage = (props: loginPropsUI) => {
+export const LoginPopup = (props: loginPropsUI) => {
   const [confirmPassword,setConfirmPassword] = useState('')
   const [email,setEmail] = useState('')
   const [action, setAction] = useState('login')
@@ -113,10 +113,24 @@ const FirstPage = (props: loginPropsUI) => {
       })
     }
   }
+
+  const handleClosePopup = () => {
+    let popup: HTMLElement | null = document.getElementById("login-popup")
+    if (popup)
+      popup.style.display = "none"
+  }
   
   return(
     action === 'login'
-      ? <div className="page-view" onSubmit={handleLogin} id="form-login">
+      ? <div className="popup-view" onSubmit={handleLogin} id="login-form">
+          <ul className="popup-nav">
+            <li className="nav-message">
+              <h2><FormattedMessage id="Login message" defaultMessage="login_message" /></h2>
+            </li>
+            <li className="nav-close">
+              <button className="close" onClick={handleClosePopup}>&times;</button>
+            </li>
+          </ul>
           <label className="form-label" htmlFor="username">
             <FormattedMessage id="username" defaultMessage="Username" />:
           </label>
@@ -137,7 +151,15 @@ const FirstPage = (props: loginPropsUI) => {
           </button>
       </div>
       
-      : <div className="page-view" onSubmit={handleRegister} id="form-register">
+      : <div className="popup-view" onSubmit={handleRegister} id="register-form">
+          <ul className="popup-nav">
+            <li className="nav-message">
+              <h2><FormattedMessage id="Register message" defaultMessage="register_message" /></h2>
+            </li>
+            <li className="nav-close">
+              <button className="close" onClick={handleClosePopup}>&times;</button>
+            </li>
+          </ul>
           <label className="form-label" htmlFor="username">
             <FormattedMessage id="username" defaultMessage="Username" />:
           </label>
@@ -172,5 +194,3 @@ const FirstPage = (props: loginPropsUI) => {
       </div>
   );
 }
-
-export default FirstPage

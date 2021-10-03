@@ -30,8 +30,11 @@ const zh_hk = {
   'status': '狀態',
   'On Shelf': '在架上',
   'Not On Shelf': '不在架上',
-  'Borrowed by': '被借出：',
+  'Borrowed by': '被{user}借出',
   'Borrowed': '借出',
+  'Remove book': '移除圖書',
+  'Borrow book': '借閱圖書',
+  'Return book': '歸還圖書',
 
   // User page
   'Quick Filters': '快速過濾',

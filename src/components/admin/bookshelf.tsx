@@ -136,7 +136,7 @@ const Bookshelf = () => {
       </div>
 
       {/* Render bookshelf list component */}
-      <BookshelfList books={books} loading={loading} handleBookChange={handleBookRemove} username={''} />
+      <BookshelfList books={books} loading={loading} handleBookChange={handleBookRemove} username={''} isPublic={false} />
 
       {/* Show reset button if list contains at least one book */}
       {books.length > 0 && (

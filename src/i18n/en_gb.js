@@ -30,8 +30,11 @@ const en_gb = {
   'status': 'STATUS',
   'On Shelf': 'On Shelf',
   'Not On Shelf': 'Not On Shelf',
-  'Borrowed by': 'Borrowed by',
+  'Borrowed by': 'Borrowed by {user}',
   'Borrowed': 'Borrowed',
+  'Remove book': 'Remove book',
+  'Borrow book': 'Borrow book',
+  'Return book': 'Return book',
 
   // User page
   'Quick Filters': 'Quick Filters',

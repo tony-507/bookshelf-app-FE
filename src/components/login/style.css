@@ -2,6 +2,46 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
 }
 
+.popup-view {
+  padding: 16px 16px 64px 16px;
+  margin: 32px auto 0;
+  background: #fff;
+  border-radius: 4px;
+  width: 50%;
+}
+
+.popup-nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  background: transparent;
+  border: transparent;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-message {
+  float: left;
+}
+
+.nav-close {
+  float: right;
+}
+
 .login-btn {
   display: block;
   border: 0;
@@ -15,21 +55,6 @@
   background-color: #3498db;
   border-radius: 4px;
   float: left;
-}
-
-.logout-btn {
-  display: block;
-  border: 0;
-  cursor: pointer;
-  padding: 12px 18px;
-  width: 100px;
-  margin: 12px 18px auto 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
-  background-color: #3498db;
-  border-radius: 4px;
-  float:  right;
 }
 
 .form-label {

@@ -2,14 +2,15 @@ import { Dispatch, SetStateAction } from 'react'
 import axios from 'axios'
 
 import { errorHelper, okHelper } from './../common/helper'
+import { fetchBookApi } from './bookDetailApi'
 
 // Dev path
-// const accountURL = 'http://localhost:5000/accounts/'
-// const bookURL = 'http://localhost:5000/books/'
+const accountURL = 'http://localhost:5000/accounts/'
+const bookURL = 'http://localhost:5000/books/'
 
 // Prod path
-const accountURL = 'https://bkbe.herokuapp.com/accounts/'
-const bookURL = 'https://bkbe.herokuapp.com/books/'
+// const accountURL = 'https://bkbe.herokuapp.com/accounts/'
+// const bookURL = 'https://bkbe.herokuapp.com/books/'
 
 interface errorUI {
   setDisplayError: Dispatch<SetStateAction<boolean>>;
@@ -174,7 +175,7 @@ interface borrowUI {
 }
 export const borrowBook = (props: borrowUI) => {
   axios
-    .post(bookURL + 'borrow', {id: props.id, username: props.username})
+    .post(bookURL + `status/id/${props.id}/${props.username}`)
     .then(response => {
       console.log(response.data)
 
@@ -190,13 +191,13 @@ interface returnUI {
 }
 export const returnBook = (props: returnUI) => {
   axios
-    .post(bookURL+'return', {id: props.id})
+    .post(bookURL+`status/id/${props.id}`)
     .then(response => {
       console.log(response.data)
 
       fetchAllBooks({setBooks: props.bookDbUI.setBooks, setLoading: props.bookDbUI.setLoading})
     })
-    .catch(err => {console.error(`There was an error borrowing the book ${props.title}: ${err}`)})
+    .catch(err => {console.error(`There was an error returning the book ${props.title}: ${err}`)})
 }
 interface BookInstance {
   author: string;
@@ -305,3 +306,7 @@ export const applyFilter = (props: filterUI) => {
   	})
   	.catch(err => console.error(`Error in filtering books: ${err}`))
 }
+
+// Book detail
+const fetchBook = fetchBookApi(bookURL)
+export {fetchBook}

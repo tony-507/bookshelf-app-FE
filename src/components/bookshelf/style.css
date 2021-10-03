@@ -71,3 +71,12 @@
   color: #fff;
   background: #4990e2;
 }
+
+.detail-btn {
+  display: block;
+  border: 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: #000;
+  background-color: transparent;
+}

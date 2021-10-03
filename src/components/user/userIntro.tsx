@@ -48,7 +48,7 @@ export const UserIntro = (props: userUI) => {
       < FilterList setBooks={setBooks} username={props.username} />
 
       <div className="col-content">
-        < BookshelfList books={books} loading={loading} handleBookChange={handleBookBorrow} username={props.username} />
+        < BookshelfList books={books} loading={loading} handleBookChange={handleBookBorrow} username={props.username} isPublic={false}/>
       </div>
     </div>
   )
