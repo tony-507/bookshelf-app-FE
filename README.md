@@ -40,11 +40,11 @@ to start both client and server side if you also have server side installed.
 
 ## Features
 My app has the following features:
-1. Staff/ customer channels: Only staff can alter (add/ delete) database records, and know who is owning the books. Customers can only borrow/ return books, with 
-limited visibility to book status (On Shelf/ Borrowed/ Not On Shelf)
+1. Three modes (public/ customer/ admin): The book records are visible even if the user is not logged, but the user cannot perform any operation on the book. A customer can borrow or return a book and an admin can add or remove a book record.
 2. Book Filtering: One can apply filter criteria to filter books. The filter criteria are selected to be top 5 items in each category.
-3. Translation: The webpages have two language options -- traditional Chinese and English, but not for database records.
-4. Account management: One can register a new account, and may even alter account information (not yet done).
+3. Book Detail: A dynamic page listing details of a book.
+4. Translation: The webpages have two language options -- traditional Chinese and English, but not for database records.
+5. Account management: One can register a new account, and may even alter account information (not yet done).
 
 ## Current Objectives
 1. Account information altering
@@ -53,5 +53,5 @@ limited visibility to book status (On Shelf/ Borrowed/ Not On Shelf)
 
 ## References
 1. Backbone for the project: https://blog.alexdevero.com/react-express-sqlite-app/
-2. Docs for different packages: knex, react-intl, express
+2. Docs for different packages: knex, react-intl, express, react-router-dom, typescript
 3. Stackexchange for answers to different bugs and errors
