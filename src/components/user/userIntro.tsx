@@ -32,7 +32,7 @@ export const UserIntro = (props: userUI) => {
 
   useEffect(() => {
     fetchAllBooks({setBooks: setBooks, setLoading: setLoading})
-  },[])
+  },[setLoading])
 
   const handleBookBorrow = (id: number, title: string, status: string) => {
     if (status === "On Shelf") {

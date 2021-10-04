@@ -45,21 +45,21 @@ export const FilterList = (props: filterUI) => {
   	let notOnShelf: boolean = false
 
   	for (let i=0; i<genreList.length; i++) {
-  	  dummy = document.getElementById('Genre'+i) as HTMLInputElement
+  	  dummy = document.getElementById('genre'+i) as HTMLInputElement
   	  if ((dummy && dummy.checked) || dummy === null)
   	  	genreArr.push(i)
   	}
 	const selectedGenre: string[] = genreArr.reduce((acc: string[],cur: number) => [...acc,genreList[cur]], [])
 
   	for (let i=0; i<ratingList.length; i++) {
-  	  dummy = document.getElementById('Rating'+i) as HTMLInputElement
+  	  dummy = document.getElementById('rating'+i) as HTMLInputElement
   	  if ((dummy && dummy.checked) || dummy === null)
   	  	ratingArr.push(i)
   	}
   	const selectedRating: string[] = ratingArr.reduce((acc: string[],cur: number) => [...acc,ratingList[cur]], [])
 
   	for (let i=0; i<2; i++) {
-  	  dummy = document.getElementById('Status'+i) as HTMLInputElement
+  	  dummy = document.getElementById('status'+i) as HTMLInputElement
   	  if (dummy && dummy.checked)
   	  		statusArr.push(i)
   	  else if (dummy === null) {

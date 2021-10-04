@@ -32,7 +32,7 @@ export const BookshelfListRow = (props: BookshelfListRowUI) => {
       return <FormattedMessage id="On Shelf" defaultMessage="status_on_shelf" />
     else {
       return(
-        props.username === ''
+        props.username === '' && !props.isPublic
         ? <FormattedMessage id="Borrowed by" defaultMessage="status_borrowed_admin" values={{user: `${props.book.status}`}}/>
         : <FormattedMessage id="Not On Shelf" defaultMessage="status_borrowed_user" />
       )

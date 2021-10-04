@@ -32,7 +32,7 @@ interface BookshelfListUI {
 // Create BookshelfList component
 export const BookshelfList = (props: BookshelfListUI) => {
   // Show loading message
-  if (props.loading) return <p>Leaderboard table is loading...</p>
+  if (props.loading) return <p>Loading...</p>
 
   return (
     <table className="table">
