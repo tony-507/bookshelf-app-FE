@@ -22,12 +22,6 @@ interface navbarUI {
   setLocale: Dispatch<SetStateAction<string>>;
   locale: string;
   setMessages: Dispatch<SetStateAction<any>>;
-  messageDisplay: {
-    setError: Dispatch<SetStateAction<string>>;
-    setDisplayError: Dispatch<SetStateAction<boolean>>;
-    setOk: Dispatch<SetStateAction<string>>;
-    setDisplayOk: Dispatch<SetStateAction<boolean>>;
-  };
 }
 
 export const Navbar = (props: navbarUI) => {
@@ -128,7 +122,8 @@ export const Navbar = (props: navbarUI) => {
   	    </ul>
 
         <div className="modal" id="login-popup">
-          <LoginPopup messageDisplay={props.messageDisplay} accountCredentials={props.accountCredentials} />
+
+          <LoginPopup accountCredentials={props.accountCredentials} />
         </div>
 	  </div>
   	)

@@ -2,17 +2,12 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import { validateLogin, registerAdd } from './../api/index'
+import { Error, Ok } from './../common/messages'
 import { errorHelper } from './../common/helper'
 
 import './style.css';
 
 interface loginPropsUI {
-  messageDisplay: {
-    setError: Dispatch<SetStateAction<string>>;
-    setDisplayError: Dispatch<SetStateAction<boolean>>;
-    setOk: Dispatch<SetStateAction<string>>;
-    setDisplayOk: Dispatch<SetStateAction<boolean>>;
-  };
   accountCredentials: {
     auth: string;
     setAuth: Dispatch<SetStateAction<string>>;
@@ -20,15 +15,18 @@ interface loginPropsUI {
     setUsername: Dispatch<SetStateAction<string>>;
     password: string;
     setPassword: Dispatch<SetStateAction<string>>;
-  };
+  }
 }
 
 export const LoginPopup = (props: loginPropsUI) => {
   const [confirmPassword,setConfirmPassword] = useState('')
   const [email,setEmail] = useState('')
   const [action, setAction] = useState('login')
+  const [error, setError] = useState('')
+  const [displayError, setDisplayError] = useState(false)
+  const [ok, setOk] = useState('')
+  const [displayOk, setDisplayOk] = useState(false)
   const {setAuth, username, setUsername, password, setPassword} = props.accountCredentials
-  const {setError, setDisplayError, setOk, setDisplayOk} = props.messageDisplay
 
   useEffect(() => {
     setAction('login')
@@ -115,6 +113,8 @@ export const LoginPopup = (props: loginPropsUI) => {
   }
 
   const handleClosePopup = () => {
+    setDisplayError(false)
+    setDisplayOk(false)
     let popup: HTMLElement | null = document.getElementById("login-popup")
     if (popup)
       popup.style.display = "none"
@@ -131,6 +131,11 @@ export const LoginPopup = (props: loginPropsUI) => {
               <button className="close" onClick={handleClosePopup}>&times;</button>
             </li>
           </ul>
+
+          <Error display={displayError} message={error} />
+
+          <Ok display={displayOk} message={ok} />
+
           <label className="form-label" htmlFor="username">
             <FormattedMessage id="username" defaultMessage="Username" />:
           </label>
@@ -160,6 +165,11 @@ export const LoginPopup = (props: loginPropsUI) => {
               <button className="close" onClick={handleClosePopup}>&times;</button>
             </li>
           </ul>
+
+          <Error display={displayError} message={error} />
+
+          <Ok display={displayOk} message={ok} />
+
           <label className="form-label" htmlFor="username">
             <FormattedMessage id="username" defaultMessage="Username" />:
           </label>

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 import axios from 'axios'
 
 // Interfaces
-interface BookUI {
+interface bookUI {
   id: number;
   author: string;
   title: string;
@@ -13,7 +13,7 @@ interface BookUI {
 }
 
 interface bookDbUI {
-  setBooks: Dispatch<SetStateAction<BookUI[]>>;
+  setBooks: Dispatch<SetStateAction<bookUI[]>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -23,7 +23,7 @@ interface filterUI {
   selectedGenre: string[];
   username: string;
   notOnShelf: boolean;
-  setBooks: Dispatch<SetStateAction<BookUI[]>>;
+  setBooks: Dispatch<SetStateAction<bookUI[]>>;
 }
 
 interface topFiveUI {

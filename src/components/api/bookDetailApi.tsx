@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import axios from 'axios'
 
-interface BookUI {
+interface bookUI {
   id: number;
   author: string;
   title: string;
@@ -13,8 +13,8 @@ interface BookUI {
 
 interface fetchBookUI {
   id: number;
-  setBook: Dispatch<SetStateAction<BookUI[]>>;
-  setLoading: Dispatch<SetStateAction<Boolean>>;
+  setBook: Dispatch<SetStateAction<bookUI[]>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 export const fetchBookApi = (bookURL: string) => (props: fetchBookUI) => {

@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect,useState, Dispatch, SetStateAction } from 'react'
 
 // Import components
 import { BookshelfList } from './../bookshelf/bookshelf-list'
@@ -9,6 +9,12 @@ import './style.css'
 
 interface userUI {
   username: string;
+  messageDisplay: {
+    setError: Dispatch<SetStateAction<string>>;
+    setDisplayError: Dispatch<SetStateAction<boolean>>;
+    setOk: Dispatch<SetStateAction<string>>;
+    setDisplayOk: Dispatch<SetStateAction<boolean>>;
+  }
 }
 
 interface BookUI {
@@ -24,7 +30,7 @@ interface BookUI {
 export const UserIntro = (props: userUI) => {
 
   const [books, setBooks] = useState<BookUI[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState<boolean>(true)
   const bookDbUI = {
     setBooks: setBooks,
     setLoading: setLoading

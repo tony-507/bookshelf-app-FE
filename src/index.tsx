@@ -18,7 +18,8 @@ import StaffPage from './components/admin/index'
 import BookDetail from './components/bookDetail/index'
 import { Error, Ok } from './components/common/messages'
 import { Navbar } from './components/common/navbar'
-import {checkLogin} from './components/api/index'
+import { checkLogin} from './components/api/index'
+import { BookDetailRedirect } from './components/redirect/detailRedirect'
 
 // Default language for set up
 import en_gb from './i18n/en_gb'
@@ -69,7 +70,7 @@ const WrappedFirst = () => {
   	<Router>
 		  <div className="page-view wrap">
 
-		  	<Navbar accountCredentials={accountCredentials} locale={locale} setLocale={setLocale} setMessages={setMessages} messageDisplay={messageDisplay} />
+		  	<Navbar accountCredentials={accountCredentials} locale={locale} setLocale={setLocale} setMessages={setMessages} />
 
 			  <Error display={displayError} message={error} />
 
@@ -83,7 +84,7 @@ const WrappedFirst = () => {
 		    		{auth === '' ? <PublicPage /> : <Redirect to={"/"+auth} />}
 		    	</Route>
 		    	<Route path="/user">
-		    		{auth === 'user' ? <UserPage username={username} /> : <Redirect to="/" />}
+		    		{auth === 'user' ? <UserPage username={username} messageDisplay={messageDisplay} /> : <Redirect to="/" />}
 		    	</Route>
 		    	<Route path="/admin">
 		    		{auth === 'admin' ? <StaffPage /> : <Redirect to="/" />}
@@ -91,7 +92,8 @@ const WrappedFirst = () => {
 		    	<Route path="/errors/:id">
 		    		<h1>Error 404 Not Found</h1>
 		    	</Route>
-		    	<Route path="/books/:id" children={<BookDetail auth={auth} />} />
+		    	<Route path="/books/redirect/:id" children={<BookDetailRedirect />} />
+		    	<Route path="/books/:id" children={<BookDetail auth={auth} username={username} />} />
 		    	<Route>
 		    		<Redirect to="/errors/404" />
 		    	</Route>
