@@ -12,7 +12,7 @@ You may find a public deployed version at https://bkmangement.herokuapp.com/.
 Follow the steps below to run this simple web app.
 1. Clone the codes by running
 ```
-git clone https://github.com/tony-507/full-stack-js-bookshelf
+git clone https://github.com/tony-507/bookshelf-app-FE
 ```
 to download the repo.
 
@@ -53,5 +53,6 @@ My app has the following features:
 
 ## References
 1. Backbone for the project: https://blog.alexdevero.com/react-express-sqlite-app/
-2. Docs for different packages: knex, react-intl, express, react-router-dom, typescript
-3. Stackexchange for answers to different bugs and errors
+2. Multi-language routing: https://medium.com/prototyped/multi-language-routing-in-react-d7eb7a0688e9
+3. Docs for different packages: knex, react-intl, express, react-router-dom, typescript
+4. Stackexchange for answers to different bugs and errors
