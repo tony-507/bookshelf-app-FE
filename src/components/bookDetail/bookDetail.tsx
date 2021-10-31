@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from "react-router-dom"
 import { fetchBook, borrowBook, returnBook } from './../api/index'
+import { LocalizedRedirect } from './../../i18n'
 import './style.css'
 
 interface bookUI {
@@ -37,7 +37,6 @@ export const BookDetail = (props: detailUI) => {
   const id = window.location.pathname[window.location.pathname.length-1]
 
   useEffect(() => {
-    console.log(id)
     fetchBook({id: id, setBook: setBook, setLoading: setLoading})
   }, [id, setBook])
 
@@ -111,6 +110,8 @@ export const BookDetail = (props: detailUI) => {
       </div>
   }
 
+  const submitDetailChange = () => {}
+
   const handleAdminButtons = () => (
     isModify
     ? <div className="navBlock">
@@ -119,7 +120,7 @@ export const BookDetail = (props: detailUI) => {
           <li className="nav-right"><button className="status-btn" onClick={() => setIsModify(!isModify)}>
             Cancel
           </button></li>
-          <li className="nav-right"><button className="status-btn">
+          <li className="nav-right"><button className="status-btn" onClick={submitDetailChange}>
             Save
           </button></li>
         </ul>
@@ -188,6 +189,6 @@ export const BookDetail = (props: detailUI) => {
 
       {textInputToggle()}
   	</div>
-    : <div>Book not exist</div>
+    : <LocalizedRedirect to="/" />
   )
 }

@@ -167,7 +167,7 @@ export const LoginPopup = (props: loginPropsUI) => {
       : <div className="popup-view" onSubmit={handleRegister} id="register-form">
           <ul className="popup-nav">
             <li className="nav-message">
-              <h2><FormattedMessage id="Register message" defaultMessage="register_message" /></h2>
+              <h2><FormattedMessage id="register_message" defaultMessage="register_message" /></h2>
             </li>
             <li className="nav-close">
               <button className="close" onClick={handleClosePopup}>&times;</button>
@@ -203,12 +203,18 @@ export const LoginPopup = (props: loginPropsUI) => {
           <input className="form-login" type="text" id="email" name="email" value={email} 
           onChange={(e) => setEmail(e.currentTarget.value)} />
 
-          <button onClick={handleChange} className="login-btn">
-            <FormattedMessage id="existUserBtn" defaultMessage="Existing user?" />
-          </button>
-          <button onClick={handleRegister} className="login-btn">
-            <FormattedMessage id="registerUserBtn" defaultMessage="Register" />
-          </button>
+          <div className="login-btn-wrap">
+            <span>
+              <button onClick={handleChange} className="login-btn">
+                <FormattedMessage id="existUserBtn" defaultMessage="Existing user?" />
+              </button>
+            </span>
+            <span>
+              <button onClick={handleRegister} className="login-btn">
+                <FormattedMessage id="registerUserBtn" defaultMessage="Register" />
+              </button>
+            </span>
+          </div>
       </div>
   );
 }

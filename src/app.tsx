@@ -3,8 +3,7 @@ import React, { useState,useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
   BrowserRouter as Router,
-  Route,
-  Redirect
+  Route
 } from "react-router-dom";
 
 // Import components
@@ -67,7 +66,7 @@ export const App = () => {
 
           <Navbar accountCredentials={accountCredentials} />
 
-          <Error display={displayError} message={error} />
+           <Error display={displayError} message={error} />
 
           <Ok display={displayOk} message={ok} />
 
@@ -79,7 +78,7 @@ export const App = () => {
               { auth==="" ? <PublicPage /> : <LocalizedRedirect to={`/${auth}`} /> }
             </Route>
             <Route exact path={AppRoute.User}>
-              { auth==="user" ? <UserIntro /> : <LocalizedRedirect to={`/public`} /> }
+              { auth==="user" ? <UserIntro username={username} messageDisplay={messageDisplay} /> : <LocalizedRedirect to={`/public`} /> }
             </Route>
             <Route exact path={AppRoute.Admin}>
               { auth==="admin" ? <Bookshelf /> : <LocalizedRedirect to={`/public`} /> }

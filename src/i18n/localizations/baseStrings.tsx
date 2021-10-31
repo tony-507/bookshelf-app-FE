@@ -25,6 +25,7 @@ const baseStrings = {
   'changeLang': '中文',
   'confirmPassword': 'Input the password again',
   'login_message': 'If you are an existing user, please login to proceed.\nOtherwise you may register for a new account.',
+  'register_message': 'Please register by email.',
 
   // Staff page
   'enterXXX': 'Enter ',

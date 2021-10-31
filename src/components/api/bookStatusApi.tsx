@@ -50,8 +50,6 @@ export const borrowBookApi = (bookURL: string) => (props: borrowUI) => {
   axios
     .post(bookURL + `status/id/${props.id}/${props.username}`)
     .then(response => {
-      console.log(response.data)
-
       fetchAllApi(bookURL)({setBooks: props.bookDbUI.setBooks, setLoading: props.bookDbUI.setLoading})
     })
     .catch(err => {console.error(`There was an error borrowing the book ${props.title}: ${err}`)})
@@ -61,8 +59,6 @@ export const returnBookApi = (bookURL: string) => (props: returnUI) => {
   axios
     .post(bookURL+`status/id/${props.id}`)
     .then(response => {
-      console.log(response.data)
-
       fetchAllApi(bookURL)({setBooks: props.bookDbUI.setBooks, setLoading: props.bookDbUI.setLoading})
     })
     .catch(err => {console.error(`There was an error returning the book ${props.title}: ${err}`)})

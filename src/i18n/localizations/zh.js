@@ -2,6 +2,7 @@ import { LanguageStrings } from './baseStrings';
 
 export const zh: LanguageStrings = {
   /* Routes */
+  'routes.landBookshelf': '/',
   'routes.home': '/public',
   'routes.user': '/user',
   'routes.admin': '/admin',
@@ -25,6 +26,7 @@ export const zh: LanguageStrings = {
   'changeLang': 'ENG',
   'confirmPassword': '再次輸入密碼',
   'login_message': '現有用家可於此頁面登入。\n新用家則可點擊註冊新戶口。',
+  'register_message': '請以電郵註冊新戶口。',
 
   // Staff page
   'enterXXX': '輸入',

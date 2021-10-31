@@ -1,19 +1,6 @@
-import { Dispatch, SetStateAction } from 'react'
 import axios from 'axios'
 
-import { errorHandler, okHandler } from './../common/helper'
-
 // Interfaces
-interface errorUI {
-  setDisplayError: Dispatch<SetStateAction<boolean>>;
-  setError: Dispatch<SetStateAction<string>>;
-}
-
-interface okUI {
-  setDisplayOk: Dispatch<SetStateAction<boolean>>;
-  setOk: Dispatch<SetStateAction<string>>;
-}
-
 interface registerUI {
   username: string;
   password: string;
