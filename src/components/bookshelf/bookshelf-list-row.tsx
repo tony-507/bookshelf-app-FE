@@ -50,7 +50,7 @@ export const BookshelfListRow = (props: BookshelfListRowUI) => {
       return null
   }
 
-  const redirectBookDetail = () => {history.push(`/books/${props.book.id}`)}
+  const redirectBookDetail = () => {history.push(`/en/bookDetail/${props.book.id}`)}
 
   return(
     <tr className="table-row">

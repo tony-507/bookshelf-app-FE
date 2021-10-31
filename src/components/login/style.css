@@ -36,6 +36,7 @@
 
 .nav-message {
   float: left;
+  max-width: 85%;
 }
 
 .nav-close {
@@ -77,4 +78,18 @@
   border-color: #3498db;
   box-shadow: 0 0 2px #3498db;
   outline: 0;
+}
+
+.login-btn-wrap {
+  min-height: 25px;
+  width: 100%;
+  display: block;
+  overflow: auto;
+  transform: translate(15%);
+}
+
+@media (max-width: 950px) {
+  [class="login-btn-wrap"] {
+    min-height: 100px;
+  }
 }

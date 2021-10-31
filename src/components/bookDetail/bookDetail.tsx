@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect, useParams } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import { fetchBook, borrowBook, returnBook } from './../api/index'
 import './style.css'
 
@@ -34,9 +34,10 @@ export const BookDetail = (props: detailUI) => {
   const [genre, setGenre] = useState('')
   const [desc, setDesc] = useState('')
 
-  let { id } = useParams()
+  const id = window.location.pathname[window.location.pathname.length-1]
 
   useEffect(() => {
+    console.log(id)
     fetchBook({id: id, setBook: setBook, setLoading: setLoading})
   }, [id, setBook])
 
@@ -187,6 +188,6 @@ export const BookDetail = (props: detailUI) => {
 
       {textInputToggle()}
   	</div>
-    : <Redirect to="/error/404" />
+    : <div>Book not exist</div>
   )
 }

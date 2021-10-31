@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import axios from 'axios'
 
-import { errorHelper } from './../common/helper'
+import { errorHandler } from './../common/helper'
 
 // Interfaces
 interface errorUI {
@@ -39,9 +39,9 @@ export const checkLoginApi = (accountURL: string) => (props: sessionUI) => {
     })
 }
 
-export const checkLogoutApi = (accountURL: string) => () => {
+export const checkLogoutApi = (accountURL: string) => (username: string, role: string) => {
   axios
-    .get(accountURL + 'logout', {withCredentials: true})
+    .get(accountURL + `logout/${role}/${username}`, {withCredentials: true})
     .then(response => {
       console.log(response.data)
     })
@@ -51,28 +51,19 @@ export const checkLogoutApi = (accountURL: string) => () => {
 // Validating login and set cookies
 const setCookie = (accountURL:string) => (username: string, role: string) => {
   axios
-    .get(accountURL + 'cookie', {
-      params: {
-        username: username,
-        role: role
-      },
-      withCredentials: true
-    })
+    .get(accountURL + `cookie/${role}/${username}`, {withCredentials: true})
     .then(response => {
       console.log(response.data)
     })
 }
 
 export const validateLoginApi = (accountURL: string) => (props: loginUI) => {
+  const errorHelper = errorHandler({setError: props.errorDisplay.setError, setDisplayError: props.errorDisplay.setDisplayError})
+  
   axios
-    .get(accountURL + 'check', {
-      params: {
-        username: props.username,
-        password: props.password
-      },
-      withCredentials: true
-    })
+    .get(accountURL + `existence/${props.username}/${props.password}`, {withCredentials: true})
     .then(response => {
+      console.log(response.data)
       if (response.data.length > 0) {
         if (response.data[0].role === 'user') {
           props.errorDisplay.setDisplayError(false)
@@ -86,9 +77,7 @@ export const validateLoginApi = (accountURL: string) => (props: loginUI) => {
         }
       }
       else {
-        errorHelper({errorDisplay: props.errorDisplay,
-          errorMessage: 'Wrong username or password'
-        })
+        errorHelper('Wrong username or password')
       }
     })
     .catch(err => console.log(`${err}`))

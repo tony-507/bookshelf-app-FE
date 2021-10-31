@@ -20,7 +20,7 @@ interface BookUI {
 }
 
 // Create Bookshelf component
-const Bookshelf = () => {
+export const Bookshelf = () => {
   // Prepare states
   const [author, setAuthor] = useState('')
   const [title, setTitle] = useState('')
@@ -147,5 +147,3 @@ const Bookshelf = () => {
     </div>
   )
 }
-
-export default Bookshelf

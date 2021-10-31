@@ -1,10 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { useHistory } from 'react-router-dom'
-import {FormattedMessage} from 'react-intl'
+import { useIntl } from 'react-intl'
 
 // Translation
-import en_gb from './../../i18n/en_gb'
-import zh_hk from './../../i18n/zh_hk'
+
 
 import { checkLogout } from './../api/index'
 import LoginPopup from './../login/index'
@@ -19,21 +18,19 @@ interface navbarUI {
     password: string;
     setPassword: Dispatch<SetStateAction<string>>;
   };
-  setLocale: Dispatch<SetStateAction<string>>;
-  locale: string;
-  setMessages: Dispatch<SetStateAction<any>>;
 }
 
 export const Navbar = (props: navbarUI) => {
+  const { formatMessage, locale } = useIntl()
   let history = useHistory()
 
-  const redirectLogin = () => {history.push('/landing')}
+  const redirectLogin = () => {history.push('/')}
 
   const handleLogout = () => {
     props.accountCredentials.setAuth("")
     props.accountCredentials.setPassword("")
     props.accountCredentials.setUsername("")
-    checkLogout()
+    checkLogout(props.username, props.auth)
     redirectLogin()
   }
 
@@ -45,13 +42,11 @@ export const Navbar = (props: navbarUI) => {
   }
 
   const handleLang = () => {
-    if (props.locale === "en-gb") {
-      props.setLocale("zh-hk")
-      props.setMessages(zh_hk)
+    if (locale === "en") {
+      window.location.pathname = window.location.pathname.replace("en", "zh")
     }
     else {
-      props.setLocale("en-gb")
-      props.setMessages(en_gb)
+      window.location.pathname = window.location.pathname.replace("zh", "en")
     }
   }
 
@@ -60,16 +55,15 @@ export const Navbar = (props: navbarUI) => {
       <ul className="nav-ul">
         <li className="nav-welcome">
           <h1><button onClick={redirectLogin} className="app-title">
-            <FormattedMessage id="app_title" defaultMessage="Book Management System" />
+            {formatMessage({ id: "app_title" || "Book Management System"})}
           </button></h1>
         </li>
         <li className="nav-btn">
           <button className="log-btn" onClick={handleLang} >
-            <FormattedMessage id="changeLang" defaultMessage="Change Language" />
+            {formatMessage({ id: "changeLang" || "changeLang"})}
           </button>
         </li>
       </ul>
-
       <hr />
     </div>
   )
@@ -82,10 +76,10 @@ export const Navbar = (props: navbarUI) => {
 
         <ul className="nav-ul">
           <li className="nav-welcome">
-            <p><FormattedMessage id="welcomeMessage" defaultMessage="Welcome " />{props.accountCredentials.username}!</p>
+            <p>{formatMessage({ id: "welcomeMessage" || "Welcome "})}{props.accountCredentials.username}!</p>
           </li>
           <li className="nav-btn"><button className="log-btn" onClick={handleLogout} >
-            <FormattedMessage id="logoutBtn" defaultMessage="Logout" />
+            {formatMessage({ id: "logoutBtn" || "Logout"})}
           </button></li>
         </ul>
 	  </div>
@@ -98,10 +92,10 @@ export const Navbar = (props: navbarUI) => {
 
   	    <ul className="nav-ul">
           <li className="nav-welcome">
-            <p><FormattedMessage id="welcomeMessage" defaultMessage="Welcome " />{props.accountCredentials.username}!</p>
+            <p>{formatMessage({ id: "welcomeMessage" || "Welcome "})}{props.accountCredentials.username}!</p>
           </li>
           <li className="nav-btn"><button className="log-btn" onClick={handleLogout} >
-            <FormattedMessage id="logoutBtn" defaultMessage="Logout" />
+            {formatMessage({ id: "logoutBtn" || "Logout"})}
           </button></li>
         </ul>
 	  </div>
@@ -114,15 +108,14 @@ export const Navbar = (props: navbarUI) => {
 
   	    <ul className="nav-ul">
   	      <li className="nav-welcome">
-            <p><FormattedMessage id="loginPrompt" defaultMessage="Please login to proceed" /></p>
+            <p>{formatMessage({ id: "loginPrompt" || "Please login to proceed"})}</p>
           </li>
           <li className="nav-btn"><button className="log-btn" onClick={handleLoginPop} >
-            <FormattedMessage id="loginBtn" defaultMessage="Login" />
+            {formatMessage({ id: "loginBtn" || "Login"})}
           </button></li>
   	    </ul>
 
         <div className="modal" id="login-popup">
-
           <LoginPopup accountCredentials={props.accountCredentials} />
         </div>
 	  </div>

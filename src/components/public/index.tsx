@@ -1,3 +1,1 @@
-import { PublicPage } from './public'
-
-export default PublicPage
+export * from './public'

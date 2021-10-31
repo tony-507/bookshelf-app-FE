@@ -1,3 +1,1 @@
-import { UserIntro } from './userIntro'
-
-export default UserIntro
+export * from './userIntro'

@@ -1,27 +1,21 @@
 import { Dispatch, SetStateAction } from 'react'
 
 interface errorUI {
-  errorDisplay: {
-    setError: Dispatch<SetStateAction<string>>;
-    setDisplayError: Dispatch<SetStateAction<boolean>>;
-  },
-  errorMessage: string;
+  setError: Dispatch<SetStateAction<string>>;
+  setDisplayError: Dispatch<SetStateAction<boolean>>;
 }
 
 interface okUI {
-  okDisplay: {
-    setOk: Dispatch<SetStateAction<string>>;
-    setDisplayOk: Dispatch<SetStateAction<boolean>>;
-  },
-  okMessage: string;
+  setOk: Dispatch<SetStateAction<string>>;
+  setDisplayOk: Dispatch<SetStateAction<boolean>>;
 }
 
-export const errorHelper = (props: errorUI) => {
-  props.errorDisplay.setDisplayError(true)
-  props.errorDisplay.setError(props.errorMessage)
+export const errorHandler = (props: errorUI) => (message: string, setDisplay: boolean = true) => {
+  props.setDisplayError(setDisplay)
+  props.setError(message)
 }
 
-export const okHelper = (props: okUI) => {
-  props.okDisplay.setDisplayOk(true)
-  props.okDisplay.setOk(props.okMessage)
+export const okHandler = (props: okUI) => (message: string, setDisplay: boolean = true) => {
+  props.setDisplayOk(setDisplay)
+  props.setOk(message)
 }

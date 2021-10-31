@@ -1,3 +1,1 @@
-import { BookDetail } from './bookDetail'
-
-export default BookDetail
+export * from './bookDetail'

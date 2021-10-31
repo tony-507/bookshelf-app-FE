@@ -1,5 +1,5 @@
 import { checkLoginApi, checkLogoutApi, validateLoginApi } from './sessionApi'
-import { registerAddApi } from './registerApi'
+import { registerAddApi, checkExistApi } from './registerApi'
 import { fetchAllApi, filterApi, getTopFiveApi } from './bookFetchApi'
 import { borrowBookApi, returnBookApi } from './bookStatusApi'
 import { createBookApi, removeBookApi, resetBookApi } from './bookPost'
@@ -18,6 +18,7 @@ export const checkLogout = checkLogoutApi(accountURL)
 export const validateLogin = validateLoginApi(accountURL)
 
 export const registerAdd = registerAddApi(accountURL)
+export const checkExist = checkExistApi(accountURL)
 
 export const fetchAllBooks = fetchAllApi(bookURL)
 export const applyFilter = filterApi(bookURL)

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import axios from 'axios'
 
-import { errorHelper, okHelper } from './../common/helper'
+import { errorHandler, okHandler } from './../common/helper'
 
 // Interfaces
 interface errorUI {
@@ -18,30 +18,34 @@ interface registerUI {
   username: string;
   password: string;
   email: string;
-  errorDisplay: errorUI;
-  okDisplay: okUI;
+  errorHelper: (username: string, setDisplay?: boolean) => void;
+  okHelper: (username: string, setDisplay?: boolean) => void;
 }
 
 // APIs
 export const registerAddApi = (accountURL: string) => (props: registerUI) => {
   axios
-    .post(accountURL + 'new', {
-      username: props.username,
-      password: props.password,
-      email: props.email
-    })
+    .post(accountURL + `new/${props.username}/${props.password}/${props.email}`)
     .then(res => {
       console.log(res.data)
       // Refresh with a success message
-      props.errorDisplay.setDisplayError(false)
-      okHelper({okDisplay: props.okDisplay,
-        okMessage: 'Account created successfully'
-      })
+      props.errorHelper('',false)
+      props.okHelper('Account created successfully')
     })
     .catch(err => {
       console.error(`${err}`)
-      errorHelper({errorDisplay: props.errorDisplay,
-        errorMessage: 'Error in account creation'
-      })
+      props.errorHelper('Error in account creation')
     })
+}
+
+export const checkExistApi = (accountURL: string) => (username: string): boolean => {
+  axios
+    .get(accountURL + `/existence/${username}`)
+    .then(res => {return res.data.length > 0 ? true : false})
+    .catch(err => {
+      console.error(err)
+      return true
+    })
+
+  return true
 }

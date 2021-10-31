@@ -1,9 +1,9 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import { validateLogin, registerAdd } from './../api/index'
+import { validateLogin, registerAdd, checkExist } from './../api'
 import { Error, Ok } from './../common/messages'
-import { errorHelper } from './../common/helper'
+import { errorHandler, okHandler } from './../common/helper'
 
 import './style.css';
 
@@ -27,6 +27,9 @@ export const LoginPopup = (props: loginPropsUI) => {
   const [ok, setOk] = useState('')
   const [displayOk, setDisplayOk] = useState(false)
   const {setAuth, username, setUsername, password, setPassword} = props.accountCredentials
+
+  const errorHelper = errorHandler({setError: setError, setDisplayError: setDisplayError})
+  const okHelper = okHandler({setOk: setOk, setDisplayOk: setDisplayOk})
 
   useEffect(() => {
     setAction('login')
@@ -60,43 +63,42 @@ export const LoginPopup = (props: loginPropsUI) => {
         errorDisplay: {setError: setError, setDisplayError: setDisplayError}
       })
     }
-    else if (username === ""){
-      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
-        errorMessage: 'Username cannot be empty'
-      })
-    }
-    else {
-      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
-        errorMessage: 'Password cannot be empty'
-      })
-    }
+    else if (username === "")
+      errorHelper('Username cannot be empty')
+    else
+      errorHelper('Password cannot be empty')
   }
 
   const checkAccountDetail = () => {
     // Function for basically checking validity of register info
 
     if (username === "" || password === "" || email === "") {
-      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
-        errorMessage: 'Username, password and email cannot be empty'
-      })
+      errorHelper('Username, password and email cannot be empty')
       return false
     }
     else if (password.length < 8) {
       // Check password length (>=8)
-      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
-        errorMessage: 'Password too short'
-      })
+      errorHelper('Password too short')
       return false
     }
     else if (password !== confirmPassword) {
       // Confirm password not the same
-      errorHelper({errorDisplay: {setError: setError, setDisplayError: setDisplayError},
-        errorMessage: 'Two passwords are not identical'
-      })
+      errorHelper('Two passwords are not identical')
       return false
     }
-    else
-      return true
+    else {
+      const isExist = checkExist(username)
+      if (isExist !== null) {
+        if (checkExist(username)) {
+          errorHelper('Username exists already')
+          return false
+        }
+        else
+          return true
+      }
+      else
+        return false
+    }
   }
 
   const handleRegister = () => {
@@ -106,8 +108,8 @@ export const LoginPopup = (props: loginPropsUI) => {
         username: username,
         password: password,
         email: email,
-        errorDisplay: {setError: setError, setDisplayError: setDisplayError},
-        okDisplay: {setOk: setOk, setDisplayOk: setDisplayOk}
+        errorHelper: errorHelper,
+        okHelper: okHelper
       })
     }
   }
@@ -122,10 +124,10 @@ export const LoginPopup = (props: loginPropsUI) => {
   
   return(
     action === 'login'
-      ? <div className="popup-view" onSubmit={handleLogin} id="login-form">
+      ? <div className="popup-view" id="login-form">
           <ul className="popup-nav">
             <li className="nav-message">
-              <h2><FormattedMessage id="Login message" defaultMessage="login_message" /></h2>
+              <h2><FormattedMessage id="login_message" defaultMessage="login_message" /></h2>
             </li>
             <li className="nav-close">
               <button className="close" onClick={handleClosePopup}>&times;</button>
@@ -148,12 +150,18 @@ export const LoginPopup = (props: loginPropsUI) => {
           <input className="form-login" type="password" id="password" name="password" value={password} 
           onChange={(e) => setPassword(e.currentTarget.value)} />
 
-          <button onClick={handleLogin} className="login-btn">
-            <FormattedMessage id="loginBtn" defaultMessage="Login" />
-          </button>
-          <button onClick={handleChange} className="login-btn">
-            <FormattedMessage id="newUserBtn" defaultMessage="New?" />
-          </button>
+          <div className="login-btn-wrap">
+            <span>
+              <button onClick={handleLogin} className="login-btn">
+                <FormattedMessage id="loginBtn" defaultMessage="Login" />
+              </button>
+            </span>
+            <span>
+              <button onClick={handleChange} className="login-btn">
+                <FormattedMessage id="newUserBtn" defaultMessage="New?" />
+              </button>
+            </span>
+          </div>
       </div>
       
       : <div className="popup-view" onSubmit={handleRegister} id="register-form">

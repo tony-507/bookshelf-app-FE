@@ -1,4 +1,14 @@
-const zh_hk = {
+import { LanguageStrings } from './baseStrings';
+
+export const zh: LanguageStrings = {
+  /* Routes */
+  'routes.home': '/public',
+  'routes.user': '/user',
+  'routes.admin': '/admin',
+  'routes.error': '/error',
+
+  /* Page content */
+  
   // Login page
   'app_title': '圖書管理系統',
   'loginPrompt': '請登入。',
@@ -14,6 +24,7 @@ const zh_hk = {
   'footer': '陳旭輝',
   'changeLang': 'ENG',
   'confirmPassword': '再次輸入密碼',
+  'login_message': '現有用家可於此頁面登入。\n新用家則可點擊註冊新戶口。',
 
   // Staff page
   'enterXXX': '輸入',
@@ -41,5 +52,3 @@ const zh_hk = {
   'All': '全部',
   'Apply Filters': '過濾'
 };
-
-export default zh_hk;

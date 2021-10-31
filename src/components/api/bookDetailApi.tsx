@@ -21,6 +21,7 @@ export const fetchBookApi = (bookURL: string) => (props: fetchBookUI) => {
   axios
     .get(bookURL + `id/${props.id}`)
     .then(response => {
+      console.log(response.data)
       props.setBook(response.data)
       props.setLoading(false)
     })
