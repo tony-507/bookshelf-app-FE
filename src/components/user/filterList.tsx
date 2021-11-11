@@ -68,15 +68,16 @@ export const FilterList = (props: filterUI) => {
   	  	break
   	  }
   	}
-  	dummy = document.getElementById('Status2') as HTMLInputElement
+  	dummy = document.getElementById('status2') as HTMLInputElement
   	if (dummy) {
-  	  notOnShelf = (document.getElementById('Status2') as HTMLInputElement).checked
+  	  notOnShelf = (document.getElementById('status2') as HTMLInputElement).checked
+      console.log(notOnShelf)
   	  if (notOnShelf===true) {
-  	    if (statusArr.length === 0)
+  	    if (statusArr.length === 0) // Only check the last checkbox
   	      statusArr = [0,1]
-  	    else if (statusArr.length === 1)
+  	    else if (statusArr.length === 1) // Check one of the checkbox
   	      statusArr = statusArr.map((x) => 1-x)
-  	    else
+  	    else // Check both checkboxes
   	      statusArr = [1,2,3]
   	  }
   	}
