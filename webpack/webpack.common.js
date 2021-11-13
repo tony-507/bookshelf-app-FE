@@ -26,12 +26,12 @@ module.exports = {
 
     module: {
         rules: [
-            { test: /\.tsx?$/, exclude: "../node_modules/", loader: "awesome-typescript-loader"}, // Handle ts, tsx
+            { test: /\.tsx?$/, exclude: __dirname + "/../node_modules/", loader: "awesome-typescript-loader"}, // Handle ts, tsx
 
             { test: /\.css$/, use: ["style-loader", "css-loader"]}, // Handle css
 
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            { enforce: "pre", test: /\.js$/, exclude: "../node_modules/", loader: "source-map-loader" }
+            { enforce: "pre", test: /\.js$/, exclude: __dirname + "/../node_modules/", loader: "source-map-loader" }
         ]
     },
 
