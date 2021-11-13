@@ -14,7 +14,8 @@
   "scripts": {
     "build": "webpack --config ./webpack.prod.js",
     "watch": "webpack --watch",
-    "dev": "webpack serve --open --config ./webpack.dev.js --port 3000",
+    "dev-build": "webpack --config ./webpack.dev.js",
+    "dev": "npm run dev-build && webpack serve --open --port 3000",
     "start": "serve -s dist"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.2.3",
     "html-webpack-plugin": "^5.5.0",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
