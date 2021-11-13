@@ -2,11 +2,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: "./../src/index.tsx" // Assign a name to what to bundle
+        main: "./src/index.tsx" // Assign a name to what to bundle
     },
     output: {
         filename: "[name].bundle.js", // Name bundle.js by referring to keys of entry
-        path: __dirname + "/../dist", // Where to save bundles
+        path: __dirname + "/dist", // Where to save bundles
         clean: true, // Remove old folder
         publicPath: "/"
     },
@@ -20,18 +20,18 @@ module.exports = {
         new HtmlWebpackPlugin({
             // Plugin tp generate index.html with all bundle.js included
             title: 'Bookshelf app',
-            template: './../index.ejs'
+            template: './index.ejs'
         }),
     ],
 
     module: {
         rules: [
-            { test: /\.tsx?$/, exclude: __dirname + "/../node_modules/", loader: "awesome-typescript-loader"}, // Handle ts, tsx
+            { test: /\.tsx?$/, exclude: /node_modules/, loader: "awesome-typescript-loader"}, // Handle ts, tsx
 
             { test: /\.css$/, use: ["style-loader", "css-loader"]}, // Handle css
 
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            { enforce: "pre", test: /\.js$/, exclude: __dirname + "/../node_modules/", loader: "source-map-loader" }
+            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
     },
 
