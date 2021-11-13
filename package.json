@@ -15,7 +15,7 @@
     "build": "webpack --config ./webpack.prod.js",
     "watch": "webpack --watch",
     "dev": "webpack serve --open --config ./webpack.dev.js --port 3000",
-    "start": "serve -s build"
+    "start": "serve -s dist"
   },
   "dependencies": {
     "@types/core-js": "^2.5.5",
