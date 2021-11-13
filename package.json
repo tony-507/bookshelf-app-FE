@@ -14,7 +14,8 @@
   "scripts": {
     "build": "webpack --config ./webpack.prod.js",
     "watch": "webpack --watch",
-    "dev": "webpack serve --open --config ./webpack.dev.js --port 3000"
+    "dev": "webpack serve --open --config ./webpack.dev.js --port 3000",
+    "start": "node server.js"
   },
   "dependencies": {
     "@types/core-js": "^2.5.5",
