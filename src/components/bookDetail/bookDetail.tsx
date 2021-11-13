@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { fetchBook, borrowBook, returnBook } from './../api/index'
 import { LocalizedRedirect } from './../../i18n'
+import { Redirect } from 'react-router-dom'
 import './style.css'
 
 interface bookUI {
@@ -34,7 +35,7 @@ export const BookDetail = (props: detailUI) => {
   const [genre, setGenre] = useState('')
   const [desc, setDesc] = useState('')
 
-  const id = window.location.pathname[window.location.pathname.length-1]
+  const id = parseInt(window.location.pathname[window.location.pathname.length-1])
 
   useEffect(() => {
     fetchBook({id: id, setBook: setBook, setLoading: setLoading})
@@ -189,6 +190,6 @@ export const BookDetail = (props: detailUI) => {
 
       {textInputToggle()}
   	</div>
-    : <LocalizedRedirect to="/" />
+    : <Redirect to={LocalizedRedirect("/")} />
   )
 }

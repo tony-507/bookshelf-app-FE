@@ -30,7 +30,7 @@ export const Navbar = (props: navbarUI) => {
     props.accountCredentials.setAuth("")
     props.accountCredentials.setPassword("")
     props.accountCredentials.setUsername("")
-    checkLogout(props.username, props.auth)
+    checkLogout(props.accountCredentials.username, props.accountCredentials.auth)
     redirectLogin()
   }
 

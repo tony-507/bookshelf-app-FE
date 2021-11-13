@@ -1,7 +1,8 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Route, Redirect } from 'react-router-dom';
-import { AppLanguage, LanguageStrings } from '../../const';
+import { AppLanguage } from '../../const';
+import { LanguageStrings } from '../localizations';
 
 interface Props {
   RouterComponent: React.ComponentClass<any>;

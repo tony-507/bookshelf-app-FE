@@ -3,7 +3,8 @@ import React, { useState,useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 
 // Import components
@@ -26,13 +27,13 @@ import './style.css'
 export const App = () => {
 
   // States for account and error handling
-  const [error,setError] = useState('')
+  const [error,setError] = useState<string>('')
   const [displayError,setDisplayError] = useState(false)
-  const [ok,setOk] = useState('')
+  const [ok,setOk] = useState<string>('')
   const [displayOk,setDisplayOk] = useState(false)
-  const [auth,setAuth] = useState('')
-  const [username,setUsername] = useState('')
-  const [password,setPassword] = useState('')
+  const [auth,setAuth] = useState<string>('')
+  const [username,setUsername] = useState<string>('')
+  const [password,setPassword] = useState<string>('')
 
   useEffect(() => {
     checkLogin({setAuth: setAuth,setUsername: setUsername, setPassword: setPassword})
@@ -72,18 +73,18 @@ export const App = () => {
 
           <LocalizedSwitch>
             <Route exact path={AppRoute.LandBookshelf}>
-              <LocalizedRedirect to={`/public`} />
+              <Redirect to={LocalizedRedirect(`/public`)} />
             </Route>
             <Route exact path={AppRoute.Home}>
-              { auth==="" ? <PublicPage /> : <LocalizedRedirect to={`/${auth}`} /> }
+              { auth==="" ? <PublicPage auth={auth} /> : <Redirect to={LocalizedRedirect(`/${auth}`)} /> }
             </Route>
             <Route exact path={AppRoute.User}>
-              { auth==="user" ? <UserIntro username={username} messageDisplay={messageDisplay} /> : <LocalizedRedirect to={`/public`} /> }
+              { auth==="user" ? <UserIntro username={username} messageDisplay={messageDisplay} /> : <Redirect to={LocalizedRedirect(`/public`)} /> }
             </Route>
             <Route exact path={AppRoute.Admin}>
-              { auth==="admin" ? <Bookshelf /> : <LocalizedRedirect to={`/public`} /> }
+              { auth==="admin" ? <Bookshelf /> : <Redirect to={LocalizedRedirect(`/public`)} /> }
             </Route>
-            <Route exact path={AppRoute.bookDetail}>
+            <Route exact path={AppRoute.BookDetail}>
               <BookDetail auth={auth} username={username} />
             </Route>
             <Route path="*">

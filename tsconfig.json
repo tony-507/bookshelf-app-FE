@@ -10,6 +10,9 @@
       "es2017.intl",
       "es2018.intl"
     ],
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
     "jsx": "react",
     "esModuleInterop": true,
     "target": "es5",

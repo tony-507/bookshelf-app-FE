@@ -28,14 +28,9 @@ export const PublicPage = (props: authUI) => {
 
   const handleBookChange = (id: number, title: string, status: string) => {}
 
-  if (props.auth === "admin")
-    history.push("/admin")
-  else if (props.auth === "user")
-    history.push("/user")
-  else
     return(
       <div className="page-view">
-        <BookshelfList books={books} loading={loading} handleBookChange={handleBookChange} username={''} isPublic={true} />
+        {<BookshelfList books={books} loading={loading} handleBookChange={handleBookChange} username={''} isPublic={true} />}
       </div>
     )
 

@@ -6,6 +6,7 @@ export const zh: LanguageStrings = {
   'routes.home': '/public',
   'routes.user': '/user',
   'routes.admin': '/admin',
+  'routes.bookDetail': '/bookDetail/:id',
   'routes.error': '/error',
 
   /* Page content */

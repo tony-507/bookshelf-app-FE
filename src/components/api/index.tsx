@@ -6,12 +6,18 @@ import { createBookApi, removeBookApi, resetBookApi } from './bookPost'
 import { fetchBookApi } from './bookDetailApi'
 
 // Dev path
-// const accountURL = 'http://localhost:5000/accounts/'
-// const bookURL = 'http://localhost:5000/books/'
-
-// Prod path
-const accountURL = 'https://bkbe.herokuapp.com/accounts/'
-const bookURL = 'https://bkbe.herokuapp.com/books/'
+var accountURL = ""
+var bookURL = ""
+if (process.env.NODE_ENV === "production") {
+	// Prod path
+	accountURL = 'https://bkbe.herokuapp.com/accounts/'
+	bookURL = 'https://bkbe.herokuapp.com/books/'
+}
+else {
+	// Dev path
+	accountURL = 'http://localhost:5000/accounts/'
+	bookURL = 'http://localhost:5000/books/'
+}
 
 export const checkLogin = checkLoginApi(accountURL)
 export const checkLogout = checkLogoutApi(accountURL)
